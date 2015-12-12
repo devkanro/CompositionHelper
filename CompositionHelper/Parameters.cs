@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using CompositionHelper.Helper;
+using System;
 using System.Numerics;
 using Windows.UI.Composition;
 
-namespace CompositionHelper.Animation
+namespace CompositionHelper
 {
     /// <summary>
     /// 引用参数。
@@ -29,7 +29,7 @@ namespace CompositionHelper.Animation
 
         protected override float ValueToObject(string value)
         {
-            return float.Parse(value);
+            return value.ToScalar();
         }
     }
 
@@ -38,6 +38,10 @@ namespace CompositionHelper.Animation
     /// </summary>
     public class Vector2Parameter : Parameter<Vector2>
     {
+        /// <summary>
+        /// 为动画添加参数。
+        /// </summary>
+        /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
             animation.SetVector2Parameter(Name, ObjectValue);
@@ -45,16 +49,7 @@ namespace CompositionHelper.Animation
 
         protected override Vector2 ValueToObject(string value)
         {
-            var data = value.Split(',').Select(s => float.Parse(s)).ToList();
-            switch (data.Count)
-            {
-                case 1:
-                    return new Vector2(data[0], data[0]);
-
-                case 2:
-                    return new Vector2(data[0], data[1]);
-            }
-            return Vector2.Zero;
+            return value.ToVector2();
         }
     }
 
@@ -63,6 +58,10 @@ namespace CompositionHelper.Animation
     /// </summary>
     public class Vector3Parameter : Parameter<Vector3>
     {
+        /// <summary>
+        /// 为动画添加参数。
+        /// </summary>
+        /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
             animation.SetVector3Parameter(Name, ObjectValue);
@@ -70,16 +69,7 @@ namespace CompositionHelper.Animation
 
         protected override Vector3 ValueToObject(string value)
         {
-            var data = value.Split(',').Select(s => float.Parse(s)).ToList();
-            switch (data.Count)
-            {
-                case 1:
-                    return new Vector3(data[0], data[0], data[0]);
-
-                case 3:
-                    return new Vector3(data[0], data[1], data[2]);
-            }
-            return Vector3.Zero;
+            return value.ToVector3();
         }
     }
 
@@ -88,6 +78,10 @@ namespace CompositionHelper.Animation
     /// </summary>
     public class Vector4Parameter : Parameter<Vector4>
     {
+        /// <summary>
+        /// 为动画添加参数。
+        /// </summary>
+        /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
             animation.SetVector4Parameter(Name, ObjectValue);
@@ -95,19 +89,7 @@ namespace CompositionHelper.Animation
 
         protected override Vector4 ValueToObject(string value)
         {
-            var data = value.Split(',').Select(s => float.Parse(s)).ToList();
-            switch (data.Count)
-            {
-                case 1:
-                    return new Vector4(data[0], data[0], data[0], data[0]);
-
-                case 2:
-                    return new Vector4(data[0], data[0], data[1], data[1]);
-
-                case 4:
-                    return new Vector4(data[0], data[1], data[2], data[3]);
-            }
-            return Vector4.Zero;
+            return value.ToVector4();
         }
     }
 
@@ -116,9 +98,18 @@ namespace CompositionHelper.Animation
     /// </summary>
     public class Matrix3x2Parameter : Parameter<Matrix3x2>
     {
+        /// <summary>
+        /// 为动画添加参数。
+        /// </summary>
+        /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
             animation.SetMatrix3x2Parameter(Name, ObjectValue);
+        }
+
+        protected override Matrix3x2 ValueToObject(string value)
+        {
+            return value.ToMatrix3x2();
         }
     }
 
@@ -130,6 +121,27 @@ namespace CompositionHelper.Animation
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
             animation.SetMatrix4x4Parameter(Name, ObjectValue);
+        }
+
+        protected override Matrix4x4 ValueToObject(string value)
+        {
+            return value.ToMatrix4x4();
+        }
+    }
+
+    /// <summary>
+    /// 四元数参数。
+    /// </summary>
+    public class QuaternionParameter : Parameter<Quaternion>
+    {
+        public override void AddParameterToAnimation(CompositionAnimation animation)
+        {
+            animation.SetQuaternionParameter(Name, ObjectValue);
+        }
+
+        protected override Quaternion ValueToObject(string value)
+        {
+            return value.ToQuaternion();
         }
     }
 }

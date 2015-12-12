@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace CompositionHelper.Animation
+namespace CompositionHelper
 {
     /// <summary>
     /// 参数集合。

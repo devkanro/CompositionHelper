@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
@@ -34,31 +33,35 @@ namespace CompositionHelper.Animation
             set { SetValue(ChildrenProperty, value); }
         }
 
+        /// <summary>
+        /// 开始故事板。
+        /// </summary>
         public void Start()
         {
-            var animators = Children.Select(c => c.BuildCompositionAnimation());
-            foreach (var animator in animators)
+            foreach (var animation in Children)
             {
-                animator.Start();
+                animation.TargetVisual.StartAnimation(animation.TargetProperty.ToString(), animation.BuildCompositionAnimation());
             }
         }
 
+        /// <summary>
+        /// 停止故事板。
+        /// </summary>
         public void Stop()
         {
-            var animators = Children.Select(c => c.BuildCompositionAnimation());
-            foreach (var animator in animators)
+            foreach (var animation in Children)
             {
-                animator.Stop();
+                animation.TargetVisual.StopAnimation(animation.TargetProperty.ToString());
             }
         }
 
+        /// <summary>
+        /// [SDK 10586 不可用]暂停故事板。
+        /// </summary>
+        [Obsolete("SDK 10586 不可用。")]
         public void Pause()
         {
-            var animators = Children.Select(c => c.BuildCompositionAnimation());
-            foreach (var animator in animators)
-            {
-                animator.Pause();
-            }
+            throw new NotImplementedException("SDK 10586 不可用。");
         }
 
         public void Dispose()

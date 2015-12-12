@@ -8,7 +8,7 @@ namespace CompositionHelper.Animation
     /// <summary>
     /// 关键帧的基类。
     /// </summary>
-    public abstract class KeyFrame : DependencyObject, IKeyFrame
+    public abstract class KeyFrame : DependencyObject
     {
         /// <summary>
         /// 标示 <see cref="Progress"/> 依赖属性。

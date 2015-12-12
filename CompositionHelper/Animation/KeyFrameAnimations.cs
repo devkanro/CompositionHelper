@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Markup;
 
@@ -65,6 +66,38 @@ namespace CompositionHelper.Animation
         protected override KeyFrameAnimation CreateCompositionAnimation(Compositor compositor)
         {
             return compositor.CreateVector4KeyFrameAnimation();
+        }
+    }
+
+    /// <summary>
+    /// 颜色动画。
+    /// </summary>
+    [ContentProperty(Name = "KeyFrames")]
+    public class ColorUseKeyFrame : AnimationUseKeyFrame<Color>
+    {
+        public ColorUseKeyFrame()
+        {
+        }
+
+        protected override KeyFrameAnimation CreateCompositionAnimation(Compositor compositor)
+        {
+            return compositor.CreateColorKeyFrameAnimation();
+        }
+    }
+
+    /// <summary>
+    /// 四元数动画。
+    /// </summary>
+    [ContentProperty(Name = "KeyFrames")]
+    public class QuaternionUseKeyFrame : AnimationUseKeyFrame<Quaternion>
+    {
+        public QuaternionUseKeyFrame()
+        {
+        }
+
+        protected override KeyFrameAnimation CreateCompositionAnimation(Compositor compositor)
+        {
+            return compositor.CreateQuaternionKeyFrameAnimation();
         }
     }
 }

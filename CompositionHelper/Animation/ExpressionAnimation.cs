@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Hosting;
 
 namespace CompositionHelper.Animation
 {
@@ -26,23 +25,17 @@ namespace CompositionHelper.Animation
             set { SetValue(ExpressionProperty, value); }
         }
 
-        public override CompositionPropertyAnimator BuildCompositionAnimation()
+        public override CompositionAnimation BuildCompositionAnimation()
         {
-            if (Animator != null) return Animator;
+            if (CompositionAnimation != null) return CompositionAnimation;
 
-            if (Target == null) throw new InvalidOperationException("没有为动画提供目标对象。");
-            if (Property == null) throw new InvalidOperationException("没有为动画提供目标属性。");
-
-            TargetVisual = (ContainerVisual)ElementCompositionPreview.GetContainerVisual(Target);
+            if (TargetElement == null) throw new InvalidOperationException("没有为动画提供目标对象。");
+            if (TargetProperty == VisualProperty.None) throw new InvalidOperationException("没有为动画提供目标属性。");
 
             CompositionAnimation?.Dispose();
             CompositionAnimation = TargetVisual.Compositor.CreateExpressionAnimation(Expression);
 
-
-
-            Animator?.Dispose();
-            Animator = TargetVisual.ConnectAnimation(Property, CompositionAnimation);
-            return Animator;
+            return CompositionAnimation;
         }
     }
 }

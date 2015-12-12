@@ -2,42 +2,43 @@
 using System;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Hosting;
 
 namespace CompositionHelper.Animation
 {
     /// <summary>
     /// 表示动画的基类，所有动画都集成自该类。
     /// </summary>
-    public abstract class Animation : DependencyObject, IAnimation
+    public abstract class Animation : DependencyObject
     {
-        protected CompositionPropertyAnimator Animator;
         protected CompositionAnimation CompositionAnimation;
-        protected ContainerVisual TargetVisual;
 
         protected Animation()
         {
             Parameters = new ParameterCollection();
         }
 
-        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register(
-            "Target", typeof(UIElement), typeof(Animation), new PropertyMetadata(default(UIElement)));
+        public static readonly DependencyProperty TargetElementProperty = DependencyProperty.Register(
+            "TargetElement", typeof(UIElement), typeof(Animation), new PropertyMetadata(default(UIElement)));
 
         /// <summary>
         /// 表示动画的目标对象。
         /// </summary>
-        public UIElement Target
+        public UIElement TargetElement
         {
             get
             {
-                var result = (UIElement)GetValue(TargetProperty);
+                var result = (UIElement)GetValue(TargetElementProperty);
                 if (result == null)
                 {
-                    Target = result = VisualTreeHelper.FindVisualElementFormName((FrameworkElement)Window.Current.Content, TargetName);
+                    TargetElement = result = VisualTreeHelper.FindVisualElementFormName((FrameworkElement)Window.Current.Content, TargetName);
                 }
                 return result;
             }
-            set { SetValue(TargetProperty, value); }
+            set { SetValue(TargetElementProperty, value); }
         }
+
+        public Visual TargetVisual => ElementCompositionPreview.GetElementVisual(TargetElement);
 
         public static readonly DependencyProperty TargetNameProperty = DependencyProperty.Register(
             "TargetName", typeof(String), typeof(Animation), new PropertyMetadata(default(String)));
@@ -48,16 +49,16 @@ namespace CompositionHelper.Animation
             set { SetValue(TargetNameProperty, value); }
         }
 
-        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(
-            "Property", typeof(String), typeof(Animation), new PropertyMetadata(default(String)));
+        public static readonly DependencyProperty TargetPropertyProperty = DependencyProperty.Register(
+            "TargetProperty", typeof(VisualProperty), typeof(Animation), new PropertyMetadata(default(VisualProperty)));
 
         /// <summary>
         /// 表示动画的目标属性。
         /// </summary>
-        public String Property
+        public VisualProperty TargetProperty
         {
-            get { return (String)GetValue(PropertyProperty); }
-            set { SetValue(PropertyProperty, value); }
+            get { return (VisualProperty)GetValue(TargetPropertyProperty); }
+            set { SetValue(TargetPropertyProperty, value); }
         }
 
         public static readonly DependencyProperty ParametersProperty = DependencyProperty.Register(
@@ -76,21 +77,19 @@ namespace CompositionHelper.Animation
         /// 创建用于 Composition API 的 CompositionAnimation。
         /// </summary>
         /// <returns></returns>
-        public virtual CompositionPropertyAnimator BuildCompositionAnimation()
+        public virtual CompositionAnimation BuildCompositionAnimation()
         {
             throw new NotImplementedException("未提供创建 CompositionAnimation 的方法。");
         }
 
         public virtual void Dispose()
         {
-            if (Property != null)
+            if (TargetProperty != VisualProperty.None)
             {
-                TargetVisual?.DisconnectAnimation(Property);
+                TargetVisual?.StopAnimation(TargetProperty.ToString());
             }
             CompositionAnimation?.Dispose();
             CompositionAnimation = null;
-            Animator?.Dispose();
-            Animator = null;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using Windows.UI.Composition;
 
-namespace CompositionHelper.Animation
+namespace CompositionHelper
 {
     /// <summary>
     /// 参数。
