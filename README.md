@@ -2,8 +2,8 @@
 CompositionHelper for UWP Composition API.  
 You can use Composition API by a easy way.
 
-## Feature
-### Animations
+## Features
+### Animation
 Now we support all animation of Composition API.  
 You can use it by classic way(XAML).  
 ```XML
@@ -33,8 +33,8 @@ Processing...
 ## Update Log 
 
 ### 15/12/12
-Update helper to bese SDK 10586.  
-- Add `ColorKeyFrame` and `ColorUseKeyFrameAnimation`.  
-- Add `QuaternionKeyFrame` and `QuaternionUseKeyFrameAnimation`.  
+Update helper to base SDK 10586.  
+- Add `ColorKeyFrame` and `ColorAnimationUseKeyFrame`.  
+- Add `QuaternionKeyFrame` and `QuaternionAnimationUseKeyFrame`.  
 - Add `QuaternionParameter`.  
 - Remove `StoryBoard.Pause()` method.  
