@@ -5,7 +5,7 @@
     xmlns:local="using:Sample"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helper="using:CompositionHelper"
+    
     xmlns:anime="using:CompositionHelper.Animation"
     mc:Ignorable="d">
     <Page.Resources>
@@ -27,12 +27,13 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"
+        <Rectangle xmlns:helper="using:CompositionHelper" 
+                   x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"
+                   
                    helper:EasyCompositionProperties.Opacity="0.5" 
                    helper:EasyCompositionProperties.Offset="50,50,0"
                    helper:EasyCompositionProperties.RotationAngle="50"
-                   helper:EasyCompositionProperties.CenterPoint="0.5,0.5,0.5"
-                   />
+                   helper:EasyCompositionProperties.CenterPoint="0.5,0.5,0.5"/>
         <Button Content="Click Me!" Click="Button_Click"></Button>
     </Grid>
 </Page>
