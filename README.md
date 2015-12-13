@@ -78,6 +78,15 @@ Processing...
 
 ## Update Log 
 
+### 15/12/14
+Add ExpressionAnimation and ReferenceParameter support.
+- Perfect the `ExpressionAnimation` and `ReferenceParameter` class.
+- Add `Completed` event for `Storyboard` class.
+
+添加 ExpressionAnimation 与 ReferenceParameter 支持。
+- 完善 `ExpressionAnimation` 与 `ReferenceParameter` 类，现在可更方便的使用表达式动画，与添加引用参数。
+- 为 `Storyboard` 类添加 `Completed` 事件。
+
 ### 15/12/13
 Add Composition Properties warpper.
 - Add `EasyCompositionProperties` class.
