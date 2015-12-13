@@ -1,12 +1,14 @@
 ﻿using System;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 
 namespace CompositionHelper.Animation
 {
     /// <summary>
     /// 使用表达式的逐帧呈现的动画。
     /// </summary>
+    [ContentProperty(Name = nameof(Parameters))]
     public class ExpressionAnimation : Animation
     {
         public ExpressionAnimation()
@@ -33,7 +35,13 @@ namespace CompositionHelper.Animation
             if (TargetProperty == VisualProperty.None) throw new InvalidOperationException("没有为动画提供目标属性。");
 
             CompositionAnimation?.Dispose();
+            
             CompositionAnimation = TargetVisual.Compositor.CreateExpressionAnimation(Expression);
+            
+            foreach (var parameter in Parameters)
+            {
+                parameter.AddParameterToAnimation(CompositionAnimation);
+            }
 
             return CompositionAnimation;
         }

@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Diagnostics;
+using System.Numerics;
 using CompositionHelper.Animation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,8 +22,18 @@ namespace Sample
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
             (this.Resources["Storyboard"] as Storyboard).Start();
+            //(this.Resources["Storyboard2"] as Storyboard).Start();
+        }
+
+        private void Storyboard_OnCompleted(object sender, EventArgs e)
+        {
+            Debug.WriteLine(DateTime.Now);
+        }
+
+        private void Storyboard2_OnCompleted(object sender, EventArgs e)
+        {
+            Debug.WriteLine(DateTime.Now);
         }
     }
 }

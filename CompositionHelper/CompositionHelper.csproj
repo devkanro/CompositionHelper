@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationBatchFactory.cs" />
     <Compile Include="Animation\AnimationCollection.cs" />
     <Compile Include="Animation\AnimationUseKeyFrame.cs" />
     <Compile Include="Animation\CubicBezierEasingFunction.cs" />

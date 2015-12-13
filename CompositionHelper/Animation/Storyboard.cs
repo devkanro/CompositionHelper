@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
@@ -10,6 +12,8 @@ namespace CompositionHelper.Animation
     [ContentProperty(Name = "Children")]
     public class Storyboard : DependencyObject, IDisposable
     {
+        private CompositionScopedBatch _animationBatch;
+
         /// <summary>
         /// 构建一个新的故事版。
         /// </summary>
@@ -38,10 +42,25 @@ namespace CompositionHelper.Animation
         /// </summary>
         public void Start()
         {
-            foreach (var animation in Children)
+            if (_animationBatch != null)
             {
-                animation.TargetVisual.StartAnimation(animation.TargetProperty.ToString(), animation.BuildCompositionAnimation());
+                _animationBatch.Completed -= _animationBatch_Completed;
+                _animationBatch.Dispose();
             }
+
+            _animationBatch = AnimationBatchFactory.Singleton.StartAnimations(Children);
+
+            if (_animationBatch == null)
+            {
+                return;
+            }
+
+            _animationBatch.Completed += _animationBatch_Completed;
+        }
+
+        private void _animationBatch_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            Completed?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -49,6 +68,9 @@ namespace CompositionHelper.Animation
         /// </summary>
         public void Stop()
         {
+            _animationBatch?.Dispose();
+            _animationBatch = null;
+
             foreach (var animation in Children)
             {
                 animation.TargetVisual.StopAnimation(animation.TargetProperty.ToString());
@@ -63,6 +85,11 @@ namespace CompositionHelper.Animation
         {
             throw new NotImplementedException("SDK 10586 不可用。");
         }
+
+        /// <summary>
+        /// 当故事板动画完成是被触发。
+        /// </summary>
+        public event EventHandler Completed;
 
         public void Dispose()
         {

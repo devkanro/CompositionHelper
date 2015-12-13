@@ -6,15 +6,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     
+    xmlns:helper="using:CompositionHelper"
     xmlns:anime="using:CompositionHelper.Animation"
     mc:Ignorable="d">
-    <!--<Page.Resources>
-        <anime:Storyboard x:Key="Storyboard">
-            <anime:ScalarAnimationUseKeyFrame TargetName="TargetRect" Duration="0:0:1" TargetProperty="Opacity">
-                <anime:ScalarKeyFrame Progress="0.0" Value="1.0" />
-                <anime:ScalarKeyFrame Progress="1.0" Value="0.0" />
-            </anime:ScalarAnimationUseKeyFrame>
+    <Page.Resources>
+        <anime:Storyboard x:Key="Storyboard" Completed="Storyboard_OnCompleted">
+            <anime:ExpressionAnimation Expression="Grid.Offset + Delta" TargetName="TargetRect" TargetProperty="Offset">
+                <anime:ExpressionAnimation.Parameters>
+                    <helper:ReferenceParameter Name="Grid" TargetName="Grid"/>
+                    <helper:Vector3Parameter Name="Delta" Value="50,50,50"/>
+                </anime:ExpressionAnimation.Parameters>
+            </anime:ExpressionAnimation>
 
+            <anime:ScalarAnimationUseKeyFrame TargetName="TargetRect" Duration="0:0:1" TargetProperty="Opacity" IterationCount="3">
+                <anime:ScalarAnimationUseKeyFrame.Parameters>
+                    <helper:ScalarParameter Name="delta" Value="-1.0"></helper:ScalarParameter>
+                </anime:ScalarAnimationUseKeyFrame.Parameters>
+                <anime:ScalarKeyFrame Progress="0.0" Value="1.0" />
+                <anime:ExpressionKeyFrame Progress="1.0" Expression="delta + this.StartingValue"/>
+            </anime:ScalarAnimationUseKeyFrame>
+        </anime:Storyboard>
+        
+        <anime:Storyboard x:Key="Storyboard2" Completed="Storyboard2_OnCompleted">
             <anime:Vector3AnimationUseKeyFrame TargetName="TargetRect" Duration="0:0:1" TargetProperty="Offset">
                 <anime:Vector3KeyFrame Progress="0.0" Value="0,0,0" />
                 <anime:Vector3KeyFrame Progress="1.0" Value="100,100,100">
@@ -26,14 +39,8 @@
         </anime:Storyboard>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle xmlns:helper="using:CompositionHelper" 
-                   x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"
-                   
-                   helper:EasyCompositionProperties.Opacity="0.5" 
-                   helper:EasyCompositionProperties.Offset="50,50,0"
-                   helper:EasyCompositionProperties.RotationAngle="50"
-                   helper:EasyCompositionProperties.CenterPoint="0.5,0.5,0.5"/>
+    <Grid x:Name="Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"/>
         <Button Content="Click Me!" Click="Button_Click"></Button>
-    </Grid>-->
+    </Grid>
 </Page>

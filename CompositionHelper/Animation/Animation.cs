@@ -11,7 +11,7 @@ namespace CompositionHelper.Animation
     /// </summary>
     public abstract class Animation : DependencyObject
     {
-        protected CompositionAnimation CompositionAnimation;
+        protected CompositionAnimation CompositionAnimation { get; set; }
 
         protected Animation()
         {

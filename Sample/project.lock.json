@@ -3,17 +3,7 @@
   "version": 1,
   "targets": {
     "UAP,Version=v10.0": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -1588,17 +1578,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -3266,17 +3246,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -4916,17 +4886,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -6599,17 +6559,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -8249,17 +8199,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -9932,17 +9872,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "CompositionHelper/1.0.1": {
-        "dependencies": {
-          "Win2D.uwp": "[1.10.0, )"
-        },
-        "compile": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/CompositionHelper.dll": {}
-        }
-      },
+      "CompositionHelper/1.0.0": {},
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -11583,18 +11513,18 @@
     }
   },
   "libraries": {
-    "CompositionHelper/1.0.1": {
-      "sha512": "hzp4GVjUAO61h6w3uUFCIRGSDi2m6G+APEAav0Ycr+9pd2Njny+s2XBXgWgZ8FydYCFkfygmJKWagXaos1Pe3w==",
+    "CompositionHelper/1.0.0": {
+      "sha512": "/q1SWh6kgRWba+TDt+7Z1kX7MLmeS8nkWG5oU/X5dCmvhXPLduCMPoI59z9ECIln4zWsweLIYIRRknzDInGU4A==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
         "_rels/.rels",
         "CompositionHelper.nuspec",
-        "lib/uap10.0/CompositionHelper.dll",
-        "lib/uap10.0/CompositionHelper.pri",
-        "lib/uap10.0/CompositionHelper.XML",
-        "lib/uap10.0/CompositionHelper/Properties/CompositionHelper.rd.xml",
-        "package/services/metadata/core-properties/5fde5a583b7041159815e20ec2cee64a.psmdcp"
+        "content/CompositionHelper.dll",
+        "content/CompositionHelper.pdb",
+        "content/CompositionHelper.pri",
+        "content/CompositionHelper.XML",
+        "package/services/metadata/core-properties/7a338920d3ee458b8c9de635f6382709.psmdcp"
       ]
     },
     "Microsoft.ApplicationInsights/1.0.0": {
@@ -15018,7 +14948,6 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "CompositionHelper >= 1.0.1",
       "Microsoft.ApplicationInsights >= 1.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.0.0",
       "Microsoft.ApplicationInsights.WindowsApps >= 1.0.0",
