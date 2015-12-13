@@ -118,6 +118,8 @@
     <Compile Include="Animation\KeyFrameAnimations.cs" />
     <Compile Include="Animation\KeyFrameCollection.cs" />
     <Compile Include="Animation\LinearEasingFunction.cs" />
+    <Compile Include="CompositionProperties.cs" />
+    <Compile Include="EasyCompositionProperties.cs" />
     <Compile Include="Helper\NumericsConvertHelper.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="ParameterCollection.cs" />

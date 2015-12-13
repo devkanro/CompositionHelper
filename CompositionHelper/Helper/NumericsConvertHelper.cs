@@ -30,6 +30,11 @@ namespace CompositionHelper.Helper
             }
         }
 
+        public static String ToStringEx(this Vector2 value)
+        {
+            return $"{value.X},{value.Y}";
+        }
+
         public static Vector3 ToVector3(this String value)
         {
             var data = value.Split(',').Select(s => float.Parse(s)).ToList();
@@ -44,6 +49,11 @@ namespace CompositionHelper.Helper
                 default:
                     throw new FormatException("输入值格式错误，无法转换为 Vector3。应为 \"x\" 或 \"x,y,z\"");
             }
+        }
+
+        public static String ToStringEx(this Vector3 value)
+        {
+            return $"{value.X},{value.Y},{value.Z}";
         }
 
         public static Vector4 ToVector4(this String value)
@@ -65,6 +75,11 @@ namespace CompositionHelper.Helper
             }
         }
 
+        public static String ToStringEx(this Vector4 value)
+        {
+            return $"{value.X},{value.Y},{value.Z},{value.W}";
+        }
+
         public static Matrix3x2 ToMatrix3x2(this String value)
         {
             try
@@ -78,6 +93,11 @@ namespace CompositionHelper.Helper
             {
                 throw new FormatException("输入值格式错误，无法转换为 Matrix3x2。矩阵类型每行用 \";\" 间隔，每元素用 \",\"间隔，元素类型为 float。", ex);
             }
+        }
+
+        public static String ToStringEx(this Matrix3x2 value)
+        {
+            return $"{value.M11},{value.M12};{value.M21},{value.M22};{value.M31},{value.M32}";
         }
 
         public static Matrix4x4 ToMatrix4x4(this String value)
@@ -96,6 +116,11 @@ namespace CompositionHelper.Helper
             }
         }
 
+        public static String ToStringEx(this Matrix4x4 value)
+        {
+            return $"{value.M11},{value.M12},{value.M13},{value.M14};{value.M21},{value.M22},{value.M23},{value.M24};{value.M31},{value.M32},{value.M33},{value.M34};{value.M41},{value.M42},{value.M43},{value.M44}";
+        }
+
         public static Quaternion ToQuaternion(this String value)
         {
             var data = value.Split(',').Select(s => float.Parse(s)).ToList();
@@ -110,6 +135,11 @@ namespace CompositionHelper.Helper
                 default:
                     throw new FormatException("输入值格式错误，无法转换为 Quaternion。应为 \"x\" 或 \"x,y,z,w\"");
             }
+        }
+
+        public static String ToStringEx(this Quaternion value)
+        {
+            return $"{value.X},{value.Y},{value.Z},{value.W}";
         }
 
         /// <summary>

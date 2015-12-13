@@ -5,6 +5,7 @@
     xmlns:local="using:Sample"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helper="using:CompositionHelper"
     xmlns:anime="using:CompositionHelper.Animation"
     mc:Ignorable="d">
     <Page.Resources>
@@ -18,7 +19,7 @@
                 <anime:Vector3KeyFrame Progress="0.0" Value="0,0,0" />
                 <anime:Vector3KeyFrame Progress="1.0" Value="100,100,100">
                     <anime:Vector3KeyFrame.EasingFunction>
-                        <anime:CubicBezierEasingFunction ControlPoint1="0,0" ControlPoint2="0.5,1.0"></anime:CubicBezierEasingFunction>
+                        <anime:CubicBezierEasingFunction ControlPoint1="0,0" ControlPoint2="0.5,1.0"/>
                     </anime:Vector3KeyFrame.EasingFunction>
                 </anime:Vector3KeyFrame>
             </anime:Vector3AnimationUseKeyFrame>
@@ -26,7 +27,12 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"></Rectangle>
+        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"
+                   helper:EasyCompositionProperties.Opacity="0.5" 
+                   helper:EasyCompositionProperties.Offset="50,50,0"
+                   helper:EasyCompositionProperties.RotationAngle="50"
+                   helper:EasyCompositionProperties.CenterPoint="0.5,0.5,0.5"
+                   />
         <Button Content="Click Me!" Click="Button_Click"></Button>
     </Grid>
 </Page>
