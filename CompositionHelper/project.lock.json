@@ -1545,7 +1545,8 @@
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {},
           "lib/uap10.0/Workaround1200257.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     },
     "UAP,Version=v10.0/win10-arm": {
       "Microsoft.CSharp/4.0.0": {
@@ -3183,7 +3184,8 @@
         "native": {
           "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     },
     "UAP,Version=v10.0/win10-arm-aot": {
       "Microsoft.CSharp/4.0.0": {
@@ -4793,7 +4795,8 @@
         "native": {
           "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     },
     "UAP,Version=v10.0/win10-x64": {
       "Microsoft.CSharp/4.0.0": {
@@ -6436,7 +6439,8 @@
         "native": {
           "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     },
     "UAP,Version=v10.0/win10-x64-aot": {
       "Microsoft.CSharp/4.0.0": {
@@ -8046,7 +8050,8 @@
         "native": {
           "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     },
     "UAP,Version=v10.0/win10-x86": {
       "Microsoft.CSharp/4.0.0": {
@@ -9689,7 +9694,8 @@
         "native": {
           "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     },
     "UAP,Version=v10.0/win10-x86-aot": {
       "Microsoft.CSharp/4.0.0": {
@@ -11299,7 +11305,8 @@
         "native": {
           "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
         }
-      }
+      },
+      "CompositionHelper/1.0.0": {}
     }
   },
   "libraries": {
@@ -14670,6 +14677,20 @@
         "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll",
         "Win2d.githash.txt",
         "Win2D.uwp.nuspec"
+      ]
+    },
+    "CompositionHelper/1.0.0": {
+      "sha512": "/q1SWh6kgRWba+TDt+7Z1kX7MLmeS8nkWG5oU/X5dCmvhXPLduCMPoI59z9ECIln4zWsweLIYIRRknzDInGU4A==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "CompositionHelper.nuspec",
+        "content/CompositionHelper.dll",
+        "content/CompositionHelper.pdb",
+        "content/CompositionHelper.pri",
+        "content/CompositionHelper.XML",
+        "package/services/metadata/core-properties/7a338920d3ee458b8c9de635f6382709.psmdcp"
       ]
     }
   },

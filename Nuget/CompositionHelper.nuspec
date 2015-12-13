@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+    <metadata minClientVersion="2.8.6">
+        <id>CompositionHelper</id>
+        <version>1.0.1</version>
+        <title>CompositionHelper</title>
+        <authors>higan</authors>
+        <owners>higan</owners>
+        <projectUrl>https://github.com/higankanshi/CompositionHelper</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>CompositionHelper for UWP Composition API.
+You can use Composition API by a easy way.</description>
+        <tags>uwp Composition win2d XAML C#</tags>
+        <dependencies>
+            <group targetFramework="uap10.0">
+                <dependency id="Win2D.uwp" version="1.10.0" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\CompositionHelper\bin\Release\CompositionHelper\Properties\CompositionHelper.rd.xml" target="lib\uap10.0\CompositionHelper\Properties\CompositionHelper.rd.xml" />
+        <file src="..\CompositionHelper\bin\Release\CompositionHelper.dll" target="lib\uap10.0\CompositionHelper.dll" />
+        <file src="..\CompositionHelper\bin\Release\CompositionHelper.pri" target="lib\uap10.0\CompositionHelper.pri" />
+        <file src="..\CompositionHelper\bin\Release\CompositionHelper.XML" target="lib\uap10.0\CompositionHelper.XML" />
+    </files>
+</package>
