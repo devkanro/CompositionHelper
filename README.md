@@ -2,6 +2,12 @@
 CompositionHelper for UWP Composition API.  
 You can use Composition API by a easy way.
 
+## Nuget Package
+Install [CompositionHelper](https://www.nuget.org/packages/CompositionHelper/)
+```PowerShell
+PM> Install-Package CompositionHelper 
+```
+
 ## Features
 ### Animation
 Now we support all animation of Composition API.  
