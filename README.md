@@ -73,10 +73,26 @@ TargetRect.SetTransformMatrix(m4x4);
 ```
 
 ### Effects
-Processing...  
-进度中...  
+We have added the ShadowEffect, you can add shadow for UIElement by XAML, need not to add any controls.  
+我们添加了阴影特效，现在你能够使用 XAML 为 UIElement 添加阴影，而无需任何的控件。  
+```XAML
+<Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100" Opacity="1">
+        <effects:ShadowEffect.ShadowEffect>
+            <effects:ShadowEffect ShadowColor="Black" BlurAmount="5" Depth="10" Direction="233"/>
+        </effects:ShadowEffect.ShadowEffect>
+</Rectangle>
+```
 
 ## Update Log 
+
+### 15/12/15
+Add ShadowEffect.
+- Add `ShadowEffect` class.
+- Add `Microsoft.UI.Composition.Toolkit` library.
+
+添加阴影特效。
+- 添加 `ShadowEffect` 类。
+- 添加 `Microsoft.UI.Composition.Toolkit` 库。
 
 ### 15/12/14
 Add ExpressionAnimation and ReferenceParameter support.
