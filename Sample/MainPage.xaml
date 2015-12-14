@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     
     xmlns:helper="using:CompositionHelper"
+    xmlns:effects="using:CompositionHelper.Effects"
     xmlns:anime="using:CompositionHelper.Animation"
     mc:Ignorable="d">
-    <Page.Resources>
+    <!--<Page.Resources>
         <anime:Storyboard x:Key="Storyboard" Completed="Storyboard_OnCompleted">
             <anime:ExpressionAnimation Expression="Grid.Offset + Delta" TargetName="TargetRect" TargetProperty="Offset">
                 <anime:ExpressionAnimation.Parameters>
@@ -26,7 +27,7 @@
                 <anime:ExpressionKeyFrame Progress="1.0" Expression="delta + this.StartingValue"/>
             </anime:ScalarAnimationUseKeyFrame>
         </anime:Storyboard>
-        
+
         <anime:Storyboard x:Key="Storyboard2" Completed="Storyboard2_OnCompleted">
             <anime:Vector3AnimationUseKeyFrame TargetName="TargetRect" Duration="0:0:1" TargetProperty="Offset">
                 <anime:Vector3KeyFrame Progress="0.0" Value="0,0,0" />
@@ -37,10 +38,15 @@
                 </anime:Vector3KeyFrame>
             </anime:Vector3AnimationUseKeyFrame>
         </anime:Storyboard>
-    </Page.Resources>
+    </Page.Resources>-->
 
     <Grid x:Name="Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100"/>
+        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100" Opacity="1">
+            <effects:ShadowEffect.ShadowEffect>
+                <effects:ShadowEffect ShadowColor="Black" BlurAmount="5" Depth="10" Direction="233"/>
+            </effects:ShadowEffect.ShadowEffect>
+        </Rectangle>
         <Button Content="Click Me!" Click="Button_Click"></Button>
+        <Slider x:Name="Slider" Maximum="360" SmallChange="1"></Slider>
     </Grid>
 </Page>

@@ -123,6 +123,7 @@
     <Compile Include="Animation\LinearEasingFunction.cs" />
     <Compile Include="CompositionProperties.cs" />
     <Compile Include="EasyCompositionProperties.cs" />
+    <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="Helper\NumericsConvertHelper.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="ParameterCollection.cs" />
@@ -135,7 +136,12 @@
     <Compile Include="VisualProperty.cs" />
     <Content Include="Properties\CompositionHelper.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

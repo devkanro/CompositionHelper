@@ -5,6 +5,7 @@ using CompositionHelper.Animation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using CompositionHelper;
+using CompositionHelper.Effects;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -22,7 +23,7 @@ namespace Sample
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            (this.Resources["Storyboard"] as Storyboard).Start();
+            //(this.Resources["Storyboard"] as Storyboard).Start();
             //(this.Resources["Storyboard2"] as Storyboard).Start();
         }
 
