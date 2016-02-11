@@ -41,11 +41,6 @@
     </Page.Resources>-->
 
     <Grid x:Name="Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100" Opacity="1">
-            <effects:ShadowEffect.ShadowEffect>
-                <effects:ShadowEffect ShadowColor="Black" BlurAmount="5" Depth="10" Direction="233"/>
-            </effects:ShadowEffect.ShadowEffect>
-        </Rectangle>
         <!--<Button Content="&lt;" Click="Button_Click_1"></Button>
         <Button Content="&gt;" HorizontalAlignment="Right" Click="Button_Click_2"></Button>-->
     </Grid>

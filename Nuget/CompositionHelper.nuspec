@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
     <metadata minClientVersion="2.8.6">
         <id>CompositionHelper</id>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <title>CompositionHelper</title>
         <authors>higan</authors>
         <owners>higan</owners>
