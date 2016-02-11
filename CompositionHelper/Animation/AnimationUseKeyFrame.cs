@@ -14,7 +14,7 @@ namespace CompositionHelper.Animation
     {
         public AnimationUseKeyFrame()
         {
-            KeyFrames = new KeyFrameCollection();
+            KeyFrames = new KeyFrameCollection<T>();
         }
 
         public static readonly DependencyProperty DurationProperty = DependencyProperty.Register(
@@ -78,14 +78,14 @@ namespace CompositionHelper.Animation
         }
 
         public static readonly DependencyProperty KeyFramesProperty = DependencyProperty.Register(
-            "KeyFrames", typeof(KeyFrameCollection), typeof(AnimationUseKeyFrame<T>), new PropertyMetadata(default(KeyFrameCollection)));
+            "KeyFrames", typeof(KeyFrameCollection<T>), typeof(AnimationUseKeyFrame<T>), new PropertyMetadata(default(KeyFrameCollection<T>)));
 
         /// <summary>
         /// 获取一个集合，表示该动画的关键帧。
         /// </summary>
-        public KeyFrameCollection KeyFrames
+        public KeyFrameCollection<T> KeyFrames
         {
-            get { return (KeyFrameCollection)GetValue(KeyFramesProperty); }
+            get { return (KeyFrameCollection<T>)GetValue(KeyFramesProperty); }
             set { SetValue(KeyFramesProperty, value); }
         }
 

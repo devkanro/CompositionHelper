@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Composition;
 
 namespace CompositionHelper.Animation
@@ -11,7 +8,6 @@ namespace CompositionHelper.Animation
     {
         private AnimationBatchFactory()
         {
-            
         }
 
         private Object Locker { get; } = new object();

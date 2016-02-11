@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
@@ -27,164 +22,164 @@ namespace CompositionHelper
             ElementCompositionPreview.SetElementChildVisual(element, visual);
         }
 
-        public static void SetAnchorPoint(this DependencyObject element, Vector2 value)
+        public static void SetAnchorPoint(this UIElement element, Vector2 value)
         {
-            (element as UIElement).GetVisual().AnchorPoint = value;
+            element.GetVisual().AnchorPoint = value;
         }
 
-        public static Vector2 GetAnchorPoint(this DependencyObject element)
+        public static Vector2 GetAnchorPoint(this UIElement element)
         {
-            return (element as UIElement).GetVisual().AnchorPoint;
+            return element.GetVisual().AnchorPoint;
         }
 
-        public static void SetBackfaceVisibility(this DependencyObject element, CompositionBackfaceVisibility value)
+        public static void SetBackfaceVisibility(this UIElement element, CompositionBackfaceVisibility value)
         {
-            (element as UIElement).GetVisual().BackfaceVisibility = value;
+            element.GetVisual().BackfaceVisibility = value;
         }
 
-        public static CompositionBackfaceVisibility GetBackfaceVisibility(this DependencyObject element)
+        public static CompositionBackfaceVisibility GetBackfaceVisibility(this UIElement element)
         {
-            return (element as UIElement).GetVisual().BackfaceVisibility;
+            return element.GetVisual().BackfaceVisibility;
         }
 
-        public static void SetBorderMode(this DependencyObject element, CompositionBorderMode value)
+        public static void SetBorderMode(this UIElement element, CompositionBorderMode value)
         {
-            (element as UIElement).GetVisual().BorderMode = value;
+            element.GetVisual().BorderMode = value;
         }
 
-        public static CompositionBorderMode GetBorderMode(this DependencyObject element)
+        public static CompositionBorderMode GetBorderMode(this UIElement element)
         {
-            return (element as UIElement).GetVisual().BorderMode;
+            return element.GetVisual().BorderMode;
         }
 
-        public static void SetCenterPoint(this DependencyObject element, Vector3 value)
+        public static void SetCenterPoint(this UIElement element, Vector3 value)
         {
-            (element as UIElement).GetVisual().CenterPoint = value;
+            element.GetVisual().CenterPoint = value;
         }
 
-        public static Vector3 GetCenterPoint(this DependencyObject element)
+        public static Vector3 GetCenterPoint(this UIElement element)
         {
-            return (element as UIElement).GetVisual().CenterPoint;
+            return element.GetVisual().CenterPoint;
         }
 
-        public static void SetClip(this DependencyObject element, CompositionClip value)
+        public static void SetClip(this UIElement element, CompositionClip value)
         {
-            (element as UIElement).GetVisual().Clip = value;
+            element.GetVisual().Clip = value;
         }
 
-        public static CompositionClip GetClip(this DependencyObject element)
+        public static CompositionClip GetClip(this UIElement element)
         {
-            return (element as UIElement).GetVisual().Clip;
+            return element.GetVisual().Clip;
         }
 
-        public static void SetCompositeMode(this DependencyObject element, CompositionCompositeMode value)
+        public static void SetCompositeMode(this UIElement element, CompositionCompositeMode value)
         {
-            (element as UIElement).GetVisual().CompositeMode = value;
+            element.GetVisual().CompositeMode = value;
         }
 
-        public static CompositionCompositeMode GetCompositeMode(this DependencyObject element)
+        public static CompositionCompositeMode GetCompositeMode(this UIElement element)
         {
-            return (element as UIElement).GetVisual().CompositeMode;
+            return element.GetVisual().CompositeMode;
         }
 
-        public static void SetIsVisible(this DependencyObject element, bool value)
+        public static void SetIsVisible(this UIElement element, bool value)
         {
-            (element as UIElement).GetVisual().IsVisible = value;
+            element.GetVisual().IsVisible = value;
         }
 
-        public static bool GetIsVisible(this DependencyObject element)
+        public static bool GetIsVisible(this UIElement element)
         {
-            return (element as UIElement).GetVisual().IsVisible;
+            return element.GetVisual().IsVisible;
         }
 
-        public static void SetOffset(this DependencyObject element, Vector3 value)
+        public static void SetOffset(this UIElement element, Vector3 value)
         {
-            (element as UIElement).GetVisual().Offset = value;
+            element.GetVisual().Offset = value;
         }
 
-        public static Vector3 GetOffset(this DependencyObject element)
+        public static Vector3 GetOffset(this UIElement element)
         {
-            return (element as UIElement).GetVisual().Offset;
+            return element.GetVisual().Offset;
         }
 
-        public static void SetOpacity(this DependencyObject element, float value)
+        public static void SetOpacity(this UIElement element, float value)
         {
-            (element as UIElement).GetVisual().Opacity = value;
+            element.GetVisual().Opacity = value;
         }
 
-        public static float  GetOpacity(this DependencyObject element)
+        public static float GetOpacity(this UIElement element)
         {
-            return (element as UIElement).GetVisual().Opacity;
+            return element.GetVisual().Opacity;
         }
 
-        public static void SetOrientation(this DependencyObject element, Quaternion value)
+        public static void SetOrientation(this UIElement element, Quaternion value)
         {
-            (element as UIElement).GetVisual().Orientation = value;
+            element.GetVisual().Orientation = value;
         }
 
-        public static Quaternion GetOrientation(this DependencyObject element)
+        public static Quaternion GetOrientation(this UIElement element)
         {
-            return (element as UIElement).GetVisual().Orientation;
+            return element.GetVisual().Orientation;
         }
 
-        public static void SetRotationAngle(this DependencyObject element, float value)
+        public static void SetRotationAngle(this UIElement element, float value)
         {
-            (element as UIElement).GetVisual().RotationAngle = value;
+            element.GetVisual().RotationAngle = value;
         }
 
-        public static float GetRotationAngle(this DependencyObject element)
+        public static float GetRotationAngle(this UIElement element)
         {
-            return (element as UIElement).GetVisual().RotationAngle;
+            return element.GetVisual().RotationAngle;
         }
 
-        public static void SetRotationAngleInDegrees(this DependencyObject element, float value)
+        public static void SetRotationAngleInDegrees(this UIElement element, float value)
         {
-            (element as UIElement).GetVisual().RotationAngleInDegrees = value;
+            element.GetVisual().RotationAngleInDegrees = value;
         }
 
-        public static float GetRotationAngleInDegrees(this DependencyObject element)
+        public static float GetRotationAngleInDegrees(this UIElement element)
         {
-            return (element as UIElement).GetVisual().RotationAngleInDegrees;
+            return element.GetVisual().RotationAngleInDegrees;
         }
 
-        public static void SetRotationAxis(this DependencyObject element, Vector3 value)
+        public static void SetRotationAxis(this UIElement element, Vector3 value)
         {
-            (element as UIElement).GetVisual().RotationAxis = value;
+            element.GetVisual().RotationAxis = value;
         }
 
-        public static Vector3  GetRotationAxis(this DependencyObject element)
+        public static Vector3 GetRotationAxis(this UIElement element)
         {
-            return (element as UIElement).GetVisual().RotationAxis;
+            return element.GetVisual().RotationAxis;
         }
 
-        public static void SetScale(this DependencyObject element, Vector3 value)
+        public static void SetScale(this UIElement element, Vector3 value)
         {
-            (element as UIElement).GetVisual().Scale = value;
+            element.GetVisual().Scale = value;
         }
 
-        public static Vector3 GetScale(this DependencyObject element)
+        public static Vector3 GetScale(this UIElement element)
         {
-            return (element as UIElement).GetVisual().Scale;
+            return element.GetVisual().Scale;
         }
 
-        public static void SetSize(this DependencyObject element, Vector2 value)
+        public static void SetSize(this UIElement element, Vector2 value)
         {
-            (element as UIElement).GetVisual().Size = value;
+            element.GetVisual().Size = value;
         }
 
-        public static Vector2 GetSize(this DependencyObject element)
+        public static Vector2 GetSize(this UIElement element)
         {
-            return (element as UIElement).GetVisual().Size;
+            return element.GetVisual().Size;
         }
 
-        public static void SetTransformMatrix(this DependencyObject element, Matrix4x4 value)
+        public static void SetTransformMatrix(this UIElement element, Matrix4x4 value)
         {
-            (element as UIElement).GetVisual().TransformMatrix = value;
+            element.GetVisual().TransformMatrix = value;
         }
 
-        public static Matrix4x4 GetTransformMatrix(this DependencyObject element)
+        public static Matrix4x4 GetTransformMatrix(this UIElement element)
         {
-            return (element as UIElement).GetVisual().TransformMatrix;
+            return element.GetVisual().TransformMatrix;
         }
     }
 }

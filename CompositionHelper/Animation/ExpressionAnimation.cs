@@ -35,9 +35,9 @@ namespace CompositionHelper.Animation
             if (TargetProperty == VisualProperty.None) throw new InvalidOperationException("没有为动画提供目标属性。");
 
             CompositionAnimation?.Dispose();
-            
+
             CompositionAnimation = TargetVisual.Compositor.CreateExpressionAnimation(Expression);
-            
+
             foreach (var parameter in Parameters)
             {
                 parameter.AddParameterToAnimation(CompositionAnimation);

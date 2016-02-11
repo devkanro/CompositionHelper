@@ -1,10 +1,10 @@
-﻿using CompositionHelper.Helper;
-using System;
+﻿using System;
 using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
+using CompositionHelper.Helper;
 
 namespace CompositionHelper
 {
@@ -14,21 +14,25 @@ namespace CompositionHelper
     public class ReferenceParameter : Parameter<CompositionObject>
     {
         private CompositionObject _value;
+        private UIElement _target;
 
         /// <summary>
         /// 设置需要创建引用参数的对象。
         /// </summary>
         public UIElement Target
         {
+            get { return _target; }
             set
             {
                 if (value != null)
                 {
+                    _target = value;
                     switch (CreateMode)
                     {
                         case ReferenceParameterCreateMode.Visual:
                             _value = ElementCompositionPreview.GetElementVisual(value);
                             break;
+
                         case ReferenceParameterCreateMode.ScrollViewerManipulationPropertySet:
                             ScrollViewer scrollViewer = value is ScrollViewer ? value as ScrollViewer : VisualTreeHelper.FindVisualElement<ScrollViewer>(value);
                             if (scrollViewer != null)
@@ -46,27 +50,13 @@ namespace CompositionHelper
         }
 
         /// <summary>
-        /// 设置需要创建引用参数的对象名称。
-        /// </summary>
-        public String TargetName
-        {
-            set
-            {
-                if (value != null)
-                {
-                    Target = VisualTreeHelper.FindVisualElementFormName((FrameworkElement) Window.Current.Content, value);
-                }
-            }
-        }
-
-        /// <summary>
         /// 获取或设置创建引用对象的方式。
         /// </summary>
         public ReferenceParameterCreateMode CreateMode { get; set; }
 
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetReferenceParameter(Name, ObjectValue);
+            animation.SetReferenceParameter(Key, ObjectValue);
         }
 
         protected override CompositionObject ValueToObject(string value)
@@ -84,6 +74,7 @@ namespace CompositionHelper
         /// 创建为 Visual。
         /// </summary>
         Visual,
+
         /// <summary>
         /// 创建为 ScrollViewerManipulationPropertySet。
         /// </summary>
@@ -97,7 +88,7 @@ namespace CompositionHelper
     {
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetScalarParameter(Name, ObjectValue);
+            animation.SetScalarParameter(Key, ObjectValue);
         }
 
         protected override float ValueToObject(string value)
@@ -117,7 +108,7 @@ namespace CompositionHelper
         /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetVector2Parameter(Name, ObjectValue);
+            animation.SetVector2Parameter(Key, ObjectValue);
         }
 
         protected override Vector2 ValueToObject(string value)
@@ -137,7 +128,7 @@ namespace CompositionHelper
         /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetVector3Parameter(Name, ObjectValue);
+            animation.SetVector3Parameter(Key, ObjectValue);
         }
 
         protected override Vector3 ValueToObject(string value)
@@ -157,7 +148,7 @@ namespace CompositionHelper
         /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetVector4Parameter(Name, ObjectValue);
+            animation.SetVector4Parameter(Key, ObjectValue);
         }
 
         protected override Vector4 ValueToObject(string value)
@@ -177,7 +168,7 @@ namespace CompositionHelper
         /// <param name="animation"></param>
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetMatrix3x2Parameter(Name, ObjectValue);
+            animation.SetMatrix3x2Parameter(Key, ObjectValue);
         }
 
         protected override Matrix3x2 ValueToObject(string value)
@@ -193,7 +184,7 @@ namespace CompositionHelper
     {
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetMatrix4x4Parameter(Name, ObjectValue);
+            animation.SetMatrix4x4Parameter(Key, ObjectValue);
         }
 
         protected override Matrix4x4 ValueToObject(string value)
@@ -209,7 +200,7 @@ namespace CompositionHelper
     {
         public override void AddParameterToAnimation(CompositionAnimation animation)
         {
-            animation.SetQuaternionParameter(Name, ObjectValue);
+            animation.SetQuaternionParameter(Key, ObjectValue);
         }
 
         protected override Quaternion ValueToObject(string value)

@@ -46,7 +46,7 @@
                 <effects:ShadowEffect ShadowColor="Black" BlurAmount="5" Depth="10" Direction="233"/>
             </effects:ShadowEffect.ShadowEffect>
         </Rectangle>
-        <Button Content="Click Me!" Click="Button_Click"></Button>
-        <Slider x:Name="Slider" Maximum="360" SmallChange="1"></Slider>
+        <!--<Button Content="&lt;" Click="Button_Click_1"></Button>
+        <Button Content="&gt;" HorizontalAlignment="Right" Click="Button_Click_2"></Button>-->
     </Grid>
 </Page>

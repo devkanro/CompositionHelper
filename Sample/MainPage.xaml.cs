@@ -4,6 +4,7 @@ using System.Numerics;
 using CompositionHelper.Animation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using CompositionHelper;
 using CompositionHelper.Effects;
 
@@ -21,8 +22,11 @@ namespace Sample
             this.InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            //RenderTargetBitmap bitmap = new RenderTargetBitmap();
+            //await bitmap.RenderAsync(TargetRect);
+            //Image.Source = bitmap;
             //(this.Resources["Storyboard"] as Storyboard).Start();
             //(this.Resources["Storyboard2"] as Storyboard).Start();
         }

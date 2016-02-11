@@ -1,8 +1,8 @@
-﻿using CompositionHelper.Helper;
-using System;
+﻿using System;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
+using CompositionHelper.Helper;
 
 namespace CompositionHelper.Animation
 {
@@ -26,28 +26,11 @@ namespace CompositionHelper.Animation
         /// </summary>
         public UIElement TargetElement
         {
-            get
-            {
-                var result = (UIElement)GetValue(TargetElementProperty);
-                if (result == null)
-                {
-                    TargetElement = result = VisualTreeHelper.FindVisualElementFormName((FrameworkElement)Window.Current.Content, TargetName);
-                }
-                return result;
-            }
+            get { return (UIElement) GetValue(TargetElementProperty); }
             set { SetValue(TargetElementProperty, value); }
         }
 
         public Visual TargetVisual => ElementCompositionPreview.GetElementVisual(TargetElement);
-
-        public static readonly DependencyProperty TargetNameProperty = DependencyProperty.Register(
-            "TargetName", typeof(String), typeof(Animation), new PropertyMetadata(default(String)));
-
-        public String TargetName
-        {
-            get { return (String)GetValue(TargetNameProperty); }
-            set { SetValue(TargetNameProperty, value); }
-        }
 
         public static readonly DependencyProperty TargetPropertyProperty = DependencyProperty.Register(
             "TargetProperty", typeof(VisualProperty), typeof(Animation), new PropertyMetadata(default(VisualProperty)));

@@ -2,7 +2,7 @@
 
 namespace CompositionHelper.Animation
 {
-    public class KeyFrameCollection : ObservableCollection<KeyFrame>
+    public class KeyFrameCollection<T> : ObservableCollection<ValueKeyFrame<T>>
     {
     }
 }

@@ -1,5 +1,4 @@
-﻿using CompositionHelper.Annotations;
-using System;
+﻿using System;
 using Windows.UI.Composition;
 
 namespace CompositionHelper.Animation
@@ -18,7 +17,7 @@ namespace CompositionHelper.Animation
         /// </summary>
         /// <param name="compositor"></param>
         /// <returns></returns>
-        public virtual CompositionEasingFunction CreateCompositionEasingFunction([NotNull]Compositor compositor)
+        public virtual CompositionEasingFunction CreateCompositionEasingFunction(Compositor compositor)
         {
             throw new NotImplementedException("未提供创建 CompositionEasingFunction 的方法。");
         }

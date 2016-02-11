@@ -1,5 +1,4 @@
-﻿using CompositionHelper.Annotations;
-using System;
+﻿using System;
 using Windows.UI.Composition;
 
 namespace CompositionHelper
@@ -12,11 +11,11 @@ namespace CompositionHelper
         /// <summary>
         /// 参数名。
         /// </summary>
-        public string Name { get; set; }
+        public string Key { get; set; }
 
         public String Value { get; set; }
 
-        public virtual void AddParameterToAnimation([NotNull]CompositionAnimation animation)
+        public virtual void AddParameterToAnimation(CompositionAnimation animation)
         {
             throw new NotImplementedException("为提供加入参数的方法。");
         }

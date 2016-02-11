@@ -1,10 +1,10 @@
-﻿using CompositionHelper.Helper;
-using System;
+﻿using System;
 using System.Numerics;
 using Windows.ApplicationModel;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
+using CompositionHelper.Helper;
 
 namespace CompositionHelper.Animation
 {

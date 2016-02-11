@@ -1,5 +1,4 @@
-﻿using CompositionHelper.Annotations;
-using System;
+﻿using System;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 
@@ -40,7 +39,7 @@ namespace CompositionHelper.Animation
             set { SetValue(EasingFunctionProperty, value); }
         }
 
-        public virtual void AddKayFrameToAnimation([NotNull]KeyFrameAnimation animation)
+        public virtual void AddKayFrameToAnimation(KeyFrameAnimation animation)
         {
             throw new NotImplementedException("未提供加入关键帧的方法。");
         }

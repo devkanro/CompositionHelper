@@ -92,6 +92,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -123,6 +124,10 @@
     <Compile Include="Animation\LinearEasingFunction.cs" />
     <Compile Include="CompositionProperties.cs" />
     <Compile Include="EasyCompositionProperties.cs" />
+    <Compile Include="Effects\CachedEffect.cs" />
+    <Compile Include="Effects\Effect.cs" />
+    <Compile Include="Effects\EffectContext.cs" />
+    <Compile Include="Effects\EffectRedrawLevel.cs" />
     <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="Helper\NumericsConvertHelper.cs" />
     <Compile Include="Parameter.cs" />

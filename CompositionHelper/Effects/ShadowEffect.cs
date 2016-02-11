@@ -21,55 +21,26 @@ namespace CompositionHelper.Effects
     /// <summary>
     /// 为 UI 元素提供阴影特效。
     /// </summary>
-    public class ShadowEffect : DependencyObject
+    public class ShadowEffect : Effect
     {
-        private UIElement Target { get; set; }
-
-        private ContainerVisual MainContainer { get; set; }
-
-        public static readonly DependencyProperty ShadowEffectProperty = DependencyProperty.RegisterAttached(
-            "ShadowEffect", typeof (ShadowEffect), typeof (UIElement), new PropertyMetadata(default(ShadowEffect)));
-
-        public static void SetShadowEffect(DependencyObject element, ShadowEffect value)
-        {
-            var oldValue = GetShadowEffect(element);
-            if (oldValue != null)
-            {
-                oldValue.DeattacheToElement();
-                oldValue.Target = null;
-                oldValue.MainContainer = null;
-            }
-            if (value != null)
-            {
-                value.Target = element as UIElement;
-                value.AttacheToElement();
-            }
-            element.SetValue(ShadowEffectProperty, value);
-        }
-
-        public static ShadowEffect GetShadowEffect(DependencyObject element)
-        {
-            return (ShadowEffect) element.GetValue(ShadowEffectProperty);
-        }
-
         public static readonly DependencyProperty ShadowColorProperty = DependencyProperty.Register(
-            "ShadowColor", typeof (Color), typeof (ShadowEffect), new PropertyMetadata(Colors.Black, (o, args) => {(o as ShadowEffect).RedrawEffect();}));
+            "ShadowColor", typeof(Color), typeof(ShadowEffect), new PropertyMetadata(Colors.Black, (o, args) => { (o as ShadowEffect).RedrawEffect(); }));
 
         public Color ShadowColor
         {
-            get { return (Color) GetValue(ShadowColorProperty); }
+            get { return (Color)GetValue(ShadowColorProperty); }
             set { SetValue(ShadowColorProperty, value); }
         }
 
         public static readonly DependencyProperty BlurAmountProperty = DependencyProperty.Register(
-            "BlurAmount", typeof (Double), typeof (ShadowEffect), new PropertyMetadata(2.0, (o, args) => { (o as ShadowEffect).RedrawEffect(); }));
+            "BlurAmount", typeof(Double), typeof(ShadowEffect), new PropertyMetadata(2.0, (o, args) => { (o as ShadowEffect).RedrawEffect(); }));
 
         public Double BlurAmount
         {
-            get { return (Double) GetValue(BlurAmountProperty); }
+            get { return (Double)GetValue(BlurAmountProperty); }
             set { SetValue(BlurAmountProperty, value); }
         }
-        
+
         public static readonly DependencyProperty DepthProperty = DependencyProperty.Register(
             "Depth", typeof(Double), typeof(ShadowEffect), new PropertyMetadata(2.0, (o, args) => { (o as ShadowEffect).RedrawEffect(); }));
 
@@ -80,21 +51,23 @@ namespace CompositionHelper.Effects
         }
 
         public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(
-            "Direction", typeof (Double), typeof (ShadowEffect), new PropertyMetadata(270.0, (o, args) => { (o as ShadowEffect).RedrawEffect(); }));
+            "Direction", typeof(Double), typeof(ShadowEffect), new PropertyMetadata(270.0, (o, args) => { (o as ShadowEffect).RedrawEffect(); }));
 
         public Double Direction
         {
-            get { return (Double) GetValue(DirectionProperty); }
+            get { return (Double)GetValue(DirectionProperty); }
             set { SetValue(DirectionProperty, value); }
         }
 
-        private void AttacheToElement()
+
+
+        protected override void AttacheToElement()
         {
             (Target as FrameworkElement).LayoutUpdated += Element_LayoutUpdated;
-            DrawEffect();
+            BuildEffect();
         }
 
-        private void DeattacheToElement()
+        protected override void DeattacheToElement()
         {
             (Target as FrameworkElement).LayoutUpdated -= Element_LayoutUpdated;
             RemoveEffect();
@@ -105,26 +78,31 @@ namespace CompositionHelper.Effects
             RedrawEffect();
         }
 
-        public void RedrawEffect()
+        protected override void RedrawEffect()
         {
-            DrawEffect();
+            BuildEffect();
         }
 
-        public void RemoveEffect()
+        protected override void RemoveEffect()
         {
-            MainContainer?.Children?.RemoveAll();
+            Context.MainContainer.Children.Remove(Context.ShadowVisual);
+            Context.ShadowVisual = null;
         }
-        
-        public async void DrawEffect()
+
+        protected override async void BuildEffect()
         {
             if (Target == null)
             {
                 return;
             }
 
-            if (MainContainer != null)
+            BuildEffect2();
+
+            return;
+
+            if (Context.MainContainer != null)
             {
-                foreach (var child in MainContainer.Children)
+                foreach (var child in Context.MainContainer.Children)
                 {
                     if (child is SpriteVisual)
                     {
@@ -134,17 +112,18 @@ namespace CompositionHelper.Effects
                 RemoveEffect();
             }
 
+            // Render a UIElement.
             RenderTargetBitmap bitmap = new RenderTargetBitmap();
             await bitmap.RenderAsync(Target);
-            var pixels  = (await bitmap.GetPixelsAsync()).ToArray();
-            
+            var pixels = (await bitmap.GetPixelsAsync()).ToArray();
+
             Size srcSize = new Size(bitmap.PixelWidth, bitmap.PixelHeight);
             Size decSize = new Size((int)BlurAmount * 10 + bitmap.PixelWidth, (int)BlurAmount * 10 + bitmap.PixelHeight);
             Size blurSize = new Size(decSize.Width - srcSize.Width, decSize.Height - srcSize.Height);
-            Point transform = new Point(blurSize.Width/2, blurSize.Height/2);
+            Point transform = new Point(blurSize.Width / 2, blurSize.Height / 2);
             transform.X += Math.Cos(Direction / 360 * 2 * Math.PI) * Depth;
             transform.Y += Math.Sin(Direction / 360 * 2 * Math.PI) * Depth;
-            
+
             ContainerVisual visual = Target.GetVisual() as ContainerVisual;
 
             Compositor compositor = visual.Compositor;
@@ -166,7 +145,6 @@ namespace CompositionHelper.Effects
                     TransformMatrix = Matrix3x2.CreateTranslation((float)blurSize.Width / 2, (float)blurSize.Height / 2)
                 };
 
-
                 ds.DrawImage(finalEffect);
             }
 
@@ -175,12 +153,13 @@ namespace CompositionHelper.Effects
             var imageFactory =
                 Microsoft.UI.Composition.Toolkit.CompositionImageFactory.CreateCompositionImageFactory(compositor);
 
+
             var effectImage = imageFactory.CreateImageFromPixels(effectPixels, (int)decSize.Width, (int)decSize.Height);
             var effectbrush = compositor.CreateSurfaceBrush(effectImage.Surface);
             var effectVisual = compositor.CreateSpriteVisual();
 
             effectVisual.Brush = effectbrush;
-            effectVisual.Offset = new Vector3( -(float)transform.X, -(float)transform.Y, 0);
+            effectVisual.Offset = new Vector3(-(float)transform.X, -(float)transform.Y, 0);
             effectVisual.Size = new Vector2((float)decSize.Width, (float)decSize.Height);
 
             var srcImage = imageFactory.CreateImageFromPixels(pixels, (int)srcSize.Width, (int)srcSize.Height);
@@ -191,14 +170,143 @@ namespace CompositionHelper.Effects
             srcVisual.Offset = new Vector3(0, 0, 0);
             srcVisual.Size = new Vector2((int)srcSize.Width, (int)srcSize.Height);
 
-            if (MainContainer == null)
+            if (Context.MainContainer == null)
             {
-                MainContainer = compositor.CreateContainerVisual();
-                ElementCompositionPreview.SetElementChildVisual(Target, MainContainer);
+                Context.MainContainer = compositor.CreateContainerVisual();
+                ElementCompositionPreview.SetElementChildVisual(Target, Context.MainContainer);
             }
 
-            MainContainer.Children.InsertAtTop(srcVisual);
-            MainContainer.Children.InsertAtBottom(effectVisual);
+            Context.MainContainer.Children.InsertAtTop(srcVisual);
+            Context.MainContainer.Children.InsertAtBottom(effectVisual);
         }
+
+
+        private FrameworkElement _parentElement;
+        private ContainerVisual _mainContainer;
+        private SpriteVisual _effectVisual;
+        private bool _drawing = false;
+
+        protected async void BuildEffect2()
+        {
+            if (_drawing)
+            {
+                return;
+            }
+            _drawing = true;
+
+            var parent = VisualTreeHelper.GetParent(Target) as FrameworkElement;
+
+            if (parent != _parentElement)
+            {
+                ClearEffect();
+                _parentElement = parent;
+            }
+
+            if (parent == null)
+            {
+                _drawing = false;
+                return;
+            }
+
+            var point = Target.TransformToVisual(_parentElement).TransformPoint(new Point(0, 0));
+
+            // Render a UIElement.
+            RenderTargetBitmap bitmap = new RenderTargetBitmap();
+            await bitmap.RenderAsync(Target);
+            var pixels = (await bitmap.GetPixelsAsync()).ToArray();
+
+            Size srcSize = new Size(bitmap.PixelWidth, bitmap.PixelHeight);
+            Size decSize = new Size((int)BlurAmount * 10 + bitmap.PixelWidth, (int)BlurAmount * 10 + bitmap.PixelHeight);
+            Size blurSize = new Size(decSize.Width - srcSize.Width, decSize.Height - srcSize.Height);
+
+            Point depthTransform = new Point(blurSize.Width / 2, blurSize.Height / 2);
+            depthTransform.X += Math.Cos(Direction / 360 * 2 * Math.PI) * Depth;
+            depthTransform.Y += Math.Sin(Direction / 360 * 2 * Math.PI) * Depth;
+
+            ContainerVisual visual = _parentElement.GetVisual() as ContainerVisual;
+            Compositor compositor = visual.Compositor;
+
+
+            if (_mainContainer == null)
+            {
+                _mainContainer = ElementCompositionPreview.GetElementChildVisual(_parentElement) as ContainerVisual;
+                if (_mainContainer == null)
+                {
+                    _mainContainer = compositor.CreateContainerVisual();
+                    ElementCompositionPreview.SetElementChildVisual(_parentElement, _mainContainer);
+                }
+            }
+
+            if ((_effectVisual != null && (!(Math.Abs(_effectVisual.Size.X - (float) decSize.Width) < 0.0000001) ||
+                                          !(Math.Abs(_effectVisual.Size.Y - (float) decSize.Height) < 0.0000001))) || _effectVisual == null)
+            {
+                CanvasDevice device = CanvasDevice.GetSharedDevice();
+                CanvasRenderTarget offscreen = new CanvasRenderTarget(device, (int) decSize.Width,
+                    (int) decSize.Height, 96);
+
+                using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
+                {
+                    Transform2DEffect finalEffect = new Transform2DEffect()
+                    {
+                        Source = new Microsoft.Graphics.Canvas.Effects.ShadowEffect()
+                        {
+                            Source =
+                                CanvasBitmap.CreateFromBytes(ds, pixels, (int) srcSize.Width, (int) srcSize.Height,
+                                    DirectXPixelFormat.B8G8R8A8UIntNormalized),
+                            BlurAmount = (float) BlurAmount,
+                            ShadowColor = ShadowColor
+                        },
+                        TransformMatrix =
+                            Matrix3x2.CreateTranslation((float) blurSize.Width/2, (float) blurSize.Height/2)
+                    };
+
+                    ds.DrawImage(finalEffect);
+                }
+
+                var effectPixels = offscreen.GetPixelBytes();
+
+                var imageFactory =
+                    Microsoft.UI.Composition.Toolkit.CompositionImageFactory.CreateCompositionImageFactory(
+                        compositor);
+
+
+                var effectImage = imageFactory.CreateImageFromPixels(effectPixels, (int) decSize.Width,
+                    (int) decSize.Height);
+                var effectbrush = compositor.CreateSurfaceBrush(effectImage.Surface);
+                _effectVisual = compositor.CreateSpriteVisual();
+                _effectVisual.Brush = effectbrush;
+
+                _effectVisual.Offset = new Vector3((float) (point.X - depthTransform.X),
+                    (float) (point.Y - depthTransform.Y), 0);
+                _effectVisual.Size = new Vector2((float) decSize.Width, (float) decSize.Height);
+                _mainContainer.Children.InsertAtBottom(_effectVisual);
+            }
+            else
+            {
+                _effectVisual.Offset = new Vector3((float)(point.X - depthTransform.X),
+                    (float)(point.Y - depthTransform.Y), 0);
+                _effectVisual.Size = new Vector2((float)decSize.Width, (float)decSize.Height);
+            }
+            
+            _drawing = false;
+        }
+
+        void ClearEffect()
+        {
+            if (_parentElement == null) return;
+
+            if(_mainContainer == null) return;
+
+            if(_effectVisual == null) return;
+
+            _mainContainer.Children.Remove(_effectVisual);
+            _mainContainer = null;
+            _parentElement = null;
+            _effectVisual.Brush?.Dispose();
+            _effectVisual.Dispose();
+            _effectVisual = null;
+        }
+
+
     }
 }
