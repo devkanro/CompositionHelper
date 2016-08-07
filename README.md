@@ -36,6 +36,49 @@ You can use it by classic way(XAML).
 </anime:Storyboard>
 ```
 
+### Fluent interface of animation  
+You can build composition animations by fluent interface.  
+你可以通过流式接口来构建 Composition API 的动画。
+
+Fluent interface can make your code easier to read.  
+流式接口可以让你的代码更加的易于理解。  
+
+01.Use the extension method `StartBuildAnimation` to create a storyborad context.  
+01.使用针对 Visual 的拓展方法 `StartBuildAnimation` 来创建一个故事版上下文。
+```CSharp
+Rectangle.GetVisual().StartBuildAnimation();
+```
+
+02.`Animate` can build simple "From-To" animation, `AnimateWithKeyFrame` can build keyframe animation, `AnimateWithExpression` can build expression animation.  
+02.`Animate` 可以创建简单的 "From-To" 动画，`AnimateWithKeyFrame` 可以创建关键帧动画，`AnimateWithExpression` 则可以创建表达式动画。
+```CSharp
+Rectangle.GetVisual().StartBuildAnimation()
+    .Animate(AnimateProperties.Offset.Y)
+    .ToExpression("this.target.Offset.y + 100")
+    .Spend(TimeSpan.FromSeconds(0.5))
+```
+
+03.Use `Over` method to go back to storyboard context.  
+03.使用 `Over` 结束动画的创建，返回到故事版上下文。
+```CSharp
+Rectangle.GetVisual().StartBuildAnimation()
+    .Animate(AnimateProperties.Offset.Y)
+    .ToExpression("this.target.Offset.y + 100")
+    .Spend(TimeSpan.FromSeconds(0.5))
+    .Over();
+```
+
+04.`Start` and `Wait` the storyboard.  
+04.使用 `Start` 开始故事版，并用 `Wait` 等待动画结束。
+```CSharp
+await Rectangle.GetVisual().StartBuildAnimation()
+    .Animate(AnimateProperties.Offset.Y)
+    .ToExpression("this.target.Offset.y + 100")
+    .Spend(TimeSpan.FromSeconds(0.5))
+    .Over()
+	.Start().Wait();
+```
+
 ### Composition Properties warpper
 You can use XAML to set UIElement's Visual composition properties.  
 你能使用 XAML 来设置 UIElement 的在 Composition API 表现的呈现相关的属性。 
@@ -77,6 +120,11 @@ We found there are some Airspace issue between Composition API visual tree and X
 我们发现在 Composition API 的视觉树与 XAML 的视觉树之间有空域问题，所以我们移除了阴影特效，你仍然可以在之前的 Commit 上找到这些代码。
 
 ## Update Log 
+
+### 16/08/07
+Add fluent animation APIs.
+
+添加了流式动画接口 API。
 
 ### 16/01/11
 Remove ShadowEffect and Clear up APIs.
