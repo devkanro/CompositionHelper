@@ -73,17 +73,21 @@ TargetRect.SetTransformMatrix(m4x4);
 ```
 
 ### Effects
-We have added the ShadowEffect, you can add shadow for UIElement by XAML, need not to add any controls.  
-我们添加了阴影特效，现在你能够使用 XAML 为 UIElement 添加阴影，而无需任何的控件。  
-```XAML
-<Rectangle x:Name="TargetRect" Fill="#FF008BFF" Width="100" Height="100" Opacity="1">
-        <effects:ShadowEffect.ShadowEffect>
-            <effects:ShadowEffect ShadowColor="Black" BlurAmount="5" Depth="10" Direction="233"/>
-        </effects:ShadowEffect.ShadowEffect>
-</Rectangle>
-```
+We found there are some Airspace issue between Composition API visual tree and XAML visual tree, so we remove shadow effect, but you can still find those codes in early Commit.  
+我们发现在 Composition API 的视觉树与 XAML 的视觉树之间有空域问题，所以我们移除了阴影特效，你仍然可以在之前的 Commit 上找到这些代码。
 
 ## Update Log 
+
+### 16/01/11
+Remove ShadowEffect and Clear up APIs.
+- Remove `ShadowEffect` class.
+- Remove `Microsoft.UI.Composition.Toolkit` library.
+- Clear up some APIs.
+
+移除阴影特效，清理一些 API。
+- 移除 `ShadowEffect` 类。
+- 移除 `Microsoft.UI.Composition.Toolkit` 库。
+- 清理一些 API 的代码。
 
 ### 15/12/15
 Add ShadowEffect.
