@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     
     xmlns:helper="using:CompositionHelper"
-    xmlns:effects="using:CompositionHelper.Effects"
     xmlns:anime="using:CompositionHelper.Animation"
     mc:Ignorable="d">
     <!--<Page.Resources>
@@ -40,7 +39,8 @@
         </anime:Storyboard>
     </Page.Resources>-->
 
-    <Grid x:Name="Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="Grid">
+        <Rectangle x:Name="Rectangle" Fill="Blue" Width="200" Height="200" Tapped="Rectangle_Tapped"></Rectangle>
         <!--<Button Content="&lt;" Click="Button_Click_1"></Button>
         <Button Content="&gt;" HorizontalAlignment="Right" Click="Button_Click_2"></Button>-->
     </Grid>

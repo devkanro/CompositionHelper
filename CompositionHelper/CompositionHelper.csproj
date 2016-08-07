@@ -11,8 +11,8 @@
     <AssemblyName>CompositionHelper</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -118,6 +118,15 @@
     <Compile Include="Animation\EasingFunction.cs" />
     <Compile Include="Animation\ExpressionAnimation.cs" />
     <Compile Include="Animation\ExpressionKeyFrame.cs" />
+    <Compile Include="Animation\Fluent\AnimateProperties.cs" />
+    <Compile Include="Animation\Fluent\AnimationFluentContext.cs" />
+    <Compile Include="Animation\Fluent\EasyTransitionAnimationFluentContext.cs" />
+    <Compile Include="Animation\Fluent\ExpressionAnimationFluentContext.cs" />
+    <Compile Include="Animation\Fluent\IAnimateProperty.cs" />
+    <Compile Include="Animation\Fluent\KeyFrameTransitionAnimationFluentContext.cs" />
+    <Compile Include="Animation\Fluent\StoryBoardFluentContext.cs" />
+    <Compile Include="Animation\Fluent\AnimationTypes.cs" />
+    <Compile Include="Animation\Fluent\TransitionAnimationFluentContext.cs" />
     <Compile Include="Animation\KeyFrame.cs" />
     <Compile Include="Animation\KeyFrameAnimations.cs" />
     <Compile Include="Animation\KeyFrameCollection.cs" />
@@ -136,6 +145,7 @@
     <Compile Include="VisualProperty.cs" />
     <Content Include="Properties\CompositionHelper.rd.xml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
