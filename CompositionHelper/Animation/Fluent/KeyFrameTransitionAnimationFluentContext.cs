@@ -42,6 +42,11 @@ namespace CompositionHelper.Animation.Fluent
         protected ExpressionKeyFrameFluentContext ExpressionKeyFrameContext { get; private set; }
         protected KeyFrameFluentContext<T> KeyFrameContext { get; private set; }
 
+        /// <summary>
+        /// 插入一个表达式帧，并提交上一帧。
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> ExpressionKeyFrame(String expression)
         {
             InsertActiveKeyFrame();
@@ -49,6 +54,11 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 插入一个关键帧，并提交上一帧。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> KeyFrame(T value)
         {
             InsertActiveKeyFrame();
@@ -56,24 +66,44 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 关键帧所处的进度。
+        /// </summary>
+        /// <param name="progress"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> At(float progress)
         {
             GetActiveKeyFrame().Progress = progress;
             return this;
         }
 
+        /// <summary>
+        /// 为当前帧创建一个线性缓动。
+        /// </summary>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> WithLinerEasing()
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateLinearEasingFunction();
             return this;
         }
 
+        /// <summary>
+        /// 为当前帧创建一个基于贝塞尔曲线的缓动。
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> WithCubicBezierEasing(Point point1, Point point2)
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateCubicBezierEasingFunction(point1.ToVector2(), point2.ToVector2());
             return this;
         }
 
+        /// <summary>
+        /// 为当前帧创建一个基于步数的缓动。
+        /// </summary>
+        /// <param name="stepCount"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);

@@ -14,19 +14,34 @@ namespace CompositionHelper.Animation.Fluent
         }
         protected ExpressionKeyFrameFluentContext ExpressionKeyFrameContext { get; private set; }
         protected KeyFrameFluentContext<T> KeyFrameContext { get; private set; }
-        
+
+        /// <summary>
+        /// 为当前帧创建一个线性缓动。
+        /// </summary>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> WithLinerEasing()
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateLinearEasingFunction();
             return this;
         }
 
+        /// <summary>
+        /// 为当前帧创建一个基于贝塞尔曲线的缓动。
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> WithCubicBezierEasing(Point point1, Point point2)
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateCubicBezierEasingFunction(point1.ToVector2(), point2.ToVector2());
             return this;
         }
 
+        /// <summary>
+        /// 为当前帧创建一个基于步数的缓动。
+        /// </summary>
+        /// <param name="stepCount"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);
@@ -86,6 +101,11 @@ namespace CompositionHelper.Animation.Fluent
             return null;
         }
         
+        /// <summary>
+        /// 指定动画开始的值。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> From(T value)
         {
             InsertActiveKeyFrame();
@@ -97,6 +117,11 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 指定动画结束的值。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> To(T value)
         {
             InsertActiveKeyFrame();
@@ -108,6 +133,11 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 通过表达式指定动画开始的值。
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> FromExpression(String expression)
         {
             InsertActiveKeyFrame();
@@ -119,6 +149,12 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 通过表达式指定动画结束的值
+        /// 
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> ToExpression(String expression)
         {
             InsertActiveKeyFrame();

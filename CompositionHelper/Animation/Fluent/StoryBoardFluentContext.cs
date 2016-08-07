@@ -15,18 +15,25 @@ namespace CompositionHelper.Animation.Fluent
 {
     public static class StoryBoardFluentExtension
     {
+        /// <summary>
+        /// 开始为制定的 <see cref="Visual"/> 对象构建动画。
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static StoryBoardFluentContext StartBuildAnimation([NotNull]this Visual target)
         {
             return new StoryBoardFluentContext(target);
         }
     }
 
+    /// <summary>
+    /// 故事版流式接口上下文。
+    /// </summary>
     public class StoryBoardFluentContext
     {
         public StoryBoardFluentContext(Visual target)
         {
             Target = target;
-            Storyboard = new Storyboard();
             Batch = Target.Compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
             Batch.Suspend();
             Batch.Completed += OnBatchCompleted;
@@ -40,14 +47,21 @@ namespace CompositionHelper.Animation.Fluent
         private List<AnimationFluentContext> _animations = new List<AnimationFluentContext>();
         private EventWaitHandle _waitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
 
+        /// <summary>
+        /// 故事版的目标 <see cref="Visual"/>。
+        /// </summary>
         public Visual Target { get; private set; }
-
-        public Storyboard Storyboard { get; private set; }
 
         public CompositionScopedBatch Batch { get; private set; }
 
         public IReadOnlyList<AnimationFluentContext> AnimationFluentContexts => _animations;
 
+        /// <summary>
+        /// 在指定的属性上开始创建简易动画。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="targetProperty"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> Animate<T>(IAnimateProperty<T> targetProperty)
         {
             AnimationFluentContext result;
@@ -84,6 +98,12 @@ namespace CompositionHelper.Animation.Fluent
             }
         }
 
+        /// <summary>
+        /// 在指定的属性上开始创建简易动画。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="targetPropertyPath"></param>
+        /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> Animate<T>(string targetPropertyPath)
         {
             AnimationTypes type = AnimationTypes.NotSupport;
@@ -123,6 +143,12 @@ namespace CompositionHelper.Animation.Fluent
             }
         }
 
+        /// <summary>
+        /// 在指定的属性上开始创建基于关键帧的动画。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="targetProperty"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> AnimateWithKeyFrame<T>(IAnimateProperty<T> targetProperty)
         {
             AnimationFluentContext result;
@@ -159,6 +185,12 @@ namespace CompositionHelper.Animation.Fluent
             }
         }
 
+        /// <summary>
+        /// 在指定的属性上开始创建基于关键帧的动画。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="targetPropertyPath"></param>
+        /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> AnimateWithKeyFrame<T>(string targetPropertyPath)
         {
             AnimationTypes type = AnimationTypes.NotSupport;
@@ -198,6 +230,11 @@ namespace CompositionHelper.Animation.Fluent
             }
         }
 
+        /// <summary>
+        /// 在指定的属性上开始创建基于表达式的动画。
+        /// </summary>
+        /// <param name="targetProperty"></param>
+        /// <returns></returns>
         public ExpressionAnimationFluentContext AnimateWithExpression(IAnimateProperty targetProperty)
         {
             var result = new ExpressionAnimationFluentContext(this, Target.Compositor.CreateExpressionAnimation(), targetProperty.PropertyPath);
@@ -205,6 +242,11 @@ namespace CompositionHelper.Animation.Fluent
             return result;
         }
 
+        /// <summary>
+        /// 在指定的属性上开始创建基于表达式的动画。
+        /// </summary>
+        /// <param name="targetPropertyPath"></param>
+        /// <returns></returns>
         public ExpressionAnimationFluentContext AnimateWithExpression(string targetPropertyPath)
         {
             var result = new ExpressionAnimationFluentContext(this, Target.Compositor.CreateExpressionAnimation(), targetPropertyPath);
@@ -212,6 +254,10 @@ namespace CompositionHelper.Animation.Fluent
             return result;
         }
 
+        /// <summary>
+        /// 开始所有创建的动画。
+        /// </summary>
+        /// <returns></returns>
         public StoryBoardFluentContext Start()
         {
             Batch.Resume();
@@ -223,6 +269,10 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 停止所有创建的动画。
+        /// </summary>
+        /// <returns></returns>
         public StoryBoardFluentContext Stop()
         {
             foreach (var animationFluentContext in AnimationFluentContexts)
@@ -232,6 +282,10 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 异步等待动画 完成。
+        /// </summary>
+        /// <returns></returns>
         public IAsyncOperation<StoryBoardFluentContext> Wait()
         {
             return Task.Run(() =>

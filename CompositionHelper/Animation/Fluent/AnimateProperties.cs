@@ -1,5 +1,8 @@
 ﻿namespace CompositionHelper.Animation.Fluent
 {
+    /// <summary>
+    /// 为可动画属性提供访问。
+    /// </summary>
     public static class AnimateProperties
     {
         public static Vector3BaseAnimateProperty Offset => new Vector3BaseAnimateProperty();
