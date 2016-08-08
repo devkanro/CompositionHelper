@@ -37,6 +37,7 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+        #if SDKVERSION_INSIDER
         /// <summary>
         /// 为当前帧创建一个基于步数的缓动。
         /// </summary>
@@ -47,6 +48,7 @@ namespace CompositionHelper.Animation.Fluent
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);
             return this;
         }
+        #endif
 
         protected override void OnAnimationBuildOver()
         {

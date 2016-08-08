@@ -33,6 +33,16 @@ namespace CompositionHelper.Animation.Fluent
         }
 
         /// <summary>
+        /// 指定当前动画所花费的时间。
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public TransitionAnimationFluentContext Spend(double millisecond)
+        {
+            return Spend(TimeSpan.FromMilliseconds(millisecond));
+        }
+
+        /// <summary>
         /// 指定动画的重复次数，-1 为无限重复。
         /// </summary>
         /// <param name="times"></param>

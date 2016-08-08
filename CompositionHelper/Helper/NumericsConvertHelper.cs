@@ -194,6 +194,15 @@ namespace CompositionHelper.Helper
             }
         }
 
+        public static Color ToColor(this int value)
+        {
+            return Color.FromArgb(
+                (byte)((value & 0xFF000000) / 0x1000000),
+                (byte)((value & 0x00FF0000) / 0x10000),
+                (byte)((value & 0x0000FF00) / 0x10),
+                (byte)((value & 0x000000FF)));
+        }
+
         public static Quaternion ToQuaternion(this Vector4 value)
         {
             return new Quaternion(value.X, value.Y, value.Z, value.W);

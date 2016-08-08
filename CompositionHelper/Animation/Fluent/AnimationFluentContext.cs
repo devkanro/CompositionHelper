@@ -127,6 +127,7 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+#if SDKVERSION_INSIDER
         /// <summary>
         /// 将一个参数加入动画。
         /// </summary>
@@ -138,6 +139,7 @@ namespace CompositionHelper.Animation.Fluent
             CompositionAnimation.SetBooleanParameter(key, parameter);
             return this;
         }
+#endif
 
         /// <summary>
         /// 结束当前动画的构建，返回到故事版上下文。

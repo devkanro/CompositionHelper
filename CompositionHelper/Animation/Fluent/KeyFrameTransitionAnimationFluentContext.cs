@@ -99,16 +99,18 @@ namespace CompositionHelper.Animation.Fluent
             return this;
         }
 
+#if SDKVERSION_INSIDER
         /// <summary>
         /// 为当前帧创建一个基于步数的缓动。
         /// </summary>
         /// <param name="stepCount"></param>
         /// <returns></returns>
-        public KeyFrameTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
+        public EasyTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);
             return this;
         }
+#endif
 
         protected override void OnAnimationBuildOver()
         {
