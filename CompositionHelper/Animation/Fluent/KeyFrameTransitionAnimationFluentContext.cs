@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -7,40 +9,15 @@ using CompositionHelper.Annotations;
 
 namespace CompositionHelper.Animation.Fluent
 {
-    public class KeyFrameFluentContext
-    {
-        internal KeyFrameFluentContext()
-        {
-        }
-
-        public float Progress { get; set; }
-        public CompositionEasingFunction EasingFunction { get; set; }
-    }
-
-    public class KeyFrameFluentContext<T> : KeyFrameFluentContext
-    {
-        internal KeyFrameFluentContext()
-        {
-        }
-
-        public T Value { get; set; }
-    }
-
-    public class ExpressionKeyFrameFluentContext : KeyFrameFluentContext<String>
-    {
-        internal ExpressionKeyFrameFluentContext()
-        {
-        }
-    }
-
-    public class KeyFrameTransitionAnimationFluentContext<T> : TransitionAnimationFluentContext
+    public abstract class KeyFrameTransitionAnimationFluentContext<T> : TransitionAnimationFluentContext
     {
         internal KeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] KeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
         {
+            KeyFrameContexts = new List<IKeyFrameFluentContext>();
         }
 
-        protected ExpressionKeyFrameFluentContext ExpressionKeyFrameContext { get; private set; }
-        protected KeyFrameFluentContext<T> KeyFrameContext { get; private set; }
+        protected IList<IKeyFrameFluentContext> KeyFrameContexts { get; private set; }
+        protected IKeyFrameFluentContext CurrentKeyFrameContext { get; private set; }
 
         /// <summary>
         /// 插入一个表达式帧，并提交上一帧。
@@ -50,7 +27,7 @@ namespace CompositionHelper.Animation.Fluent
         public KeyFrameTransitionAnimationFluentContext<T> ExpressionKeyFrame(String expression)
         {
             InsertActiveKeyFrame();
-            ExpressionKeyFrameContext = new ExpressionKeyFrameFluentContext {Value = expression};
+            CurrentKeyFrameContext = new ExpressionKeyFrameFluentContext { Value = expression };
             return this;
         }
 
@@ -62,7 +39,7 @@ namespace CompositionHelper.Animation.Fluent
         public KeyFrameTransitionAnimationFluentContext<T> KeyFrame(T value)
         {
             InsertActiveKeyFrame();
-            KeyFrameContext = new KeyFrameFluentContext<T> {Value = value};
+            CurrentKeyFrameContext = new KeyFrameFluentContext<T> { Value = value };
             return this;
         }
 
@@ -73,7 +50,7 @@ namespace CompositionHelper.Animation.Fluent
         /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> At(float progress)
         {
-            GetActiveKeyFrame().Progress = progress;
+            CurrentKeyFrameContext.Progress = progress;
             return this;
         }
 
@@ -83,7 +60,7 @@ namespace CompositionHelper.Animation.Fluent
         /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> WithLinerEasing()
         {
-            GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateLinearEasingFunction();
+            CurrentKeyFrameContext.EasingFunction = CompositionAnimation.Compositor.CreateLinearEasingFunction();
             return this;
         }
 
@@ -95,17 +72,17 @@ namespace CompositionHelper.Animation.Fluent
         /// <returns></returns>
         public KeyFrameTransitionAnimationFluentContext<T> WithCubicBezierEasing(Point point1, Point point2)
         {
-            GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateCubicBezierEasingFunction(point1.ToVector2(), point2.ToVector2());
+            CurrentKeyFrameContext.EasingFunction = CompositionAnimation.Compositor.CreateCubicBezierEasingFunction(point1.ToVector2(), point2.ToVector2());
             return this;
         }
 
 #if SDKVERSION_INSIDER
         /// <summary>
-        /// 为当前帧创建一个基于步数的缓动。
+        /// [SDK14393+]为当前帧创建一个基于步数的缓动。
         /// </summary>
         /// <param name="stepCount"></param>
         /// <returns></returns>
-        public EasyTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
+        public KeyFrameTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
         {
             GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);
             return this;
@@ -116,125 +93,230 @@ namespace CompositionHelper.Animation.Fluent
         {
             base.OnAnimationBuildOver();
             InsertActiveKeyFrame();
+            InsertActiveKeyFrameToAnimation();
         }
 
-        protected virtual void InsertKeyFrame(KeyFrameFluentContext<T> keyFrameContext)
+        protected abstract void InsertKeyFrame(KeyFrameFluentContext<T> keyFrameContext);
+        protected abstract void InsertExpressionKeyFrame(ExpressionKeyFrameFluentContext keyFrameContext);
+        private void InsertActiveKeyFrameToAnimation()
         {
-            throw new NotImplementedException("InsertKeyFrame must be override.");
+            foreach (var frameContext in KeyFrameContexts)
+            {
+                if (frameContext is ExpressionKeyFrameFluentContext)
+                {
+                    InsertExpressionKeyFrame(frameContext as ExpressionKeyFrameFluentContext);
+                }
+                else
+                {
+                    InsertKeyFrame(frameContext as KeyFrameFluentContext<T>);
+                }
+            }
+            KeyFrameContexts.Clear();
         }
-
         private void InsertActiveKeyFrame()
         {
-            var activeKeyFrame = GetActiveKeyFrame();
+            var activeKeyFrame = CurrentKeyFrameContext;
 
             if (activeKeyFrame == null)
             {
                 return;
             }
 
-            if (activeKeyFrame is ExpressionKeyFrameFluentContext)
-            {
-                (CompositionAnimation as KeyFrameAnimation).InsertExpressionKeyFrame(activeKeyFrame.Progress, (activeKeyFrame as ExpressionKeyFrameFluentContext).Value);
-            }
-            else
-            {
-                InsertKeyFrame(activeKeyFrame as KeyFrameFluentContext<T>);
-            }
+            KeyFrameContexts.Add(activeKeyFrame);
 
-            ExpressionKeyFrameContext = null;
-            KeyFrameContext = null;
+            CurrentKeyFrameContext = null;
         }
 
-        private KeyFrameFluentContext GetActiveKeyFrame()
+                #region TransitionAnimationFluentContext
+        /// <summary>
+        /// 指定当前动画在故事版开始后的一个延迟时间后执行。
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> BeginAfter(TimeSpan time)
         {
-            if (KeyFrameContext != null && ExpressionKeyFrameContext != null)
-            {
-                throw new InvalidOperationException("Internal error multiple active frames .");
-            }
-
-            if (KeyFrameContext != null)
-            {
-                return KeyFrameContext;
-            }
-
-            if (ExpressionKeyFrameContext != null)
-            {
-                return ExpressionKeyFrameContext;
-            }
-
-            return null;
+            return base.BeginAfter(time) as KeyFrameTransitionAnimationFluentContext<T>;
         }
-    }
 
-    public class ScalarKeyFrameTransitionAnimationFluentContext : KeyFrameTransitionAnimationFluentContext<float>
-    {
-        internal ScalarKeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] ScalarKeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
+        /// <summary>
+        /// 指定当前动画所花费的时间。
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> Spend(TimeSpan time)
         {
+            return base.Spend(time) as KeyFrameTransitionAnimationFluentContext<T>;
         }
 
-        protected override void InsertKeyFrame(KeyFrameFluentContext<float> keyFrameContext)
+        /// <summary>
+        /// 指定当前动画所花费的时间。
+        /// </summary>
+        /// <param name="millisecond"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> Spend(double millisecond)
         {
-            (CompositionAnimation as ScalarKeyFrameAnimation).InsertKeyFrame(keyFrameContext.Progress, keyFrameContext.Value, keyFrameContext.EasingFunction);
-        }
-    }
-
-    public class Vector2KeyFrameTransitionAnimationFluentContext : KeyFrameTransitionAnimationFluentContext<Vector2>
-    {
-        internal Vector2KeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] Vector2KeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
-        {
+            return base.Spend(millisecond) as KeyFrameTransitionAnimationFluentContext<T>;
         }
 
-        protected override void InsertKeyFrame(KeyFrameFluentContext<Vector2> keyFrameContext)
+        /// <summary>
+        /// 指定动画的重复次数，-1 为无限重复。
+        /// </summary>
+        /// <param name="times"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> Repeat(int times)
         {
-            (CompositionAnimation as Vector2KeyFrameAnimation).InsertKeyFrame(keyFrameContext.Progress, keyFrameContext.Value, keyFrameContext.EasingFunction);
-        }
-    }
-
-    public class Vector3KeyFrameTransitionAnimationFluentContext : KeyFrameTransitionAnimationFluentContext<Vector3>
-    {
-        internal Vector3KeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] Vector3KeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
-        {
+            return base.Repeat(times) as KeyFrameTransitionAnimationFluentContext<T>;
         }
 
-        protected override void InsertKeyFrame(KeyFrameFluentContext<Vector3> keyFrameContext)
+        /// <summary>
+        /// 指定动画为无限重复。
+        /// </summary>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> RepeatForever()
         {
-            (CompositionAnimation as Vector3KeyFrameAnimation).InsertKeyFrame(keyFrameContext.Progress, keyFrameContext.Value, keyFrameContext.EasingFunction);
-        }
-    }
-
-    public class Vector4KeyFrameTransitionAnimationFluentContext : KeyFrameTransitionAnimationFluentContext<Vector4>
-    {
-        internal Vector4KeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] Vector4KeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
-        {
+            return base.RepeatForever() as KeyFrameTransitionAnimationFluentContext<T>;
         }
 
-        protected override void InsertKeyFrame(KeyFrameFluentContext<Vector4> keyFrameContext)
+        /// <summary>
+        /// 指定动画在结束时保持当前值。
+        /// </summary>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> LeaveCurrentValueWhenStop()
         {
-            (CompositionAnimation as Vector4KeyFrameAnimation).InsertKeyFrame(keyFrameContext.Progress, keyFrameContext.Value, keyFrameContext.EasingFunction);
-        }
-    }
-
-    public class ColorKeyFrameTransitionAnimationFluentContext : KeyFrameTransitionAnimationFluentContext<Color>
-    {
-        internal ColorKeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] ColorKeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
-        {
+            return base.LeaveCurrentValueWhenStop() as KeyFrameTransitionAnimationFluentContext<T>;
         }
 
-        protected override void InsertKeyFrame(KeyFrameFluentContext<Color> keyFrameContext)
+        /// <summary>
+        /// 指定动画在结束时设置为初始值。
+        /// </summary>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetToInitialValueWhenStop()
         {
-            (CompositionAnimation as ColorKeyFrameAnimation).InsertKeyFrame(keyFrameContext.Progress, keyFrameContext.Value, keyFrameContext.EasingFunction);
-        }
-    }
-
-    public class QuaternionKeyFrameTransitionAnimationFluentContext : KeyFrameTransitionAnimationFluentContext<Quaternion>
-    {
-        internal QuaternionKeyFrameTransitionAnimationFluentContext([NotNull] StoryBoardFluentContext parentStoryBoard, [NotNull] QuaternionKeyFrameAnimation animation, [NotNull] String targetProperty) : base(parentStoryBoard, animation, targetProperty)
-        {
+            return base.SetToInitialValueWhenStop() as KeyFrameTransitionAnimationFluentContext<T>;
         }
 
-        protected override void InsertKeyFrame(KeyFrameFluentContext<Quaternion> keyFrameContext)
+        /// <summary>
+        /// 指定动画在结束时设置为结束值。
+        /// </summary>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetToFinalValueWhenStop()
         {
-            (CompositionAnimation as QuaternionKeyFrameAnimation).InsertKeyFrame(keyFrameContext.Progress, keyFrameContext.Value, keyFrameContext.EasingFunction);
+            return base.SetToFinalValueWhenStop() as KeyFrameTransitionAnimationFluentContext<T>;
         }
+        #endregion
+
+        #region AnimationFluentContext
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Color parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Matrix3x2 parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Matrix4x4 parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Quaternion parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, CompositionObject parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, float parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Vector2 parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Vector3 parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+        /// <summary>
+        /// 将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, Vector4 parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+
+#if SDKVERSION_INSIDER
+        /// <summary>
+        /// [SDK14393+]将一个参数加入动画。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public new KeyFrameTransitionAnimationFluentContext<T> SetParameter(string key, bool parameter)
+        {
+            return base.SetParameter(key, parameter) as KeyFrameTransitionAnimationFluentContext<T>;
+        }
+#endif
+        #endregion
     }
 }

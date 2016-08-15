@@ -129,7 +129,7 @@ namespace CompositionHelper.Animation.Fluent
 
 #if SDKVERSION_INSIDER
         /// <summary>
-        /// 将一个参数加入动画。
+        /// [SDK14393+]将一个参数加入动画。
         /// </summary>
         /// <param name="key"></param>
         /// <param name="parameter"></param>
