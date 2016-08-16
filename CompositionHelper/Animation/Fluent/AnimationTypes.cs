@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CompositionHelper.Animation.Fluent
+﻿namespace CompositionHelper.Animation.Fluent
 {
     public enum AnimationTypes
     {

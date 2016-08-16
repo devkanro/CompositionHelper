@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
-    <metadata minClientVersion="2.8.6">
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
         <id>CompositionHelper</id>
-        <version>1.0.2</version>
+        <version>1.0.5</version>
         <title>CompositionHelper</title>
         <authors>higan</authors>
         <owners>higan</owners>
@@ -12,7 +12,7 @@
 You can use Composition API by a easy way.</description>
         <tags>uwp Composition win2d XAML C#</tags>
         <dependencies>
-            <group targetFramework="uap10.0">
+            <group targetFramework="Unsupported0.0">
                 <dependency id="Win2D.uwp" version="1.10.0" />
             </group>
         </dependencies>

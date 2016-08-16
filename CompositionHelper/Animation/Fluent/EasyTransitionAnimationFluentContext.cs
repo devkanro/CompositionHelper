@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -49,7 +48,7 @@ namespace CompositionHelper.Animation.Fluent
         /// <returns></returns>
         public EasyTransitionAnimationFluentContext<T> WithStepEasing(int stepCount)
         {
-            GetActiveKeyFrame().EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);
+            ToKeyFrameContext.EasingFunction = CompositionAnimation.Compositor.CreateStepEasingFunction(stepCount);
             return this;
         }
 #endif

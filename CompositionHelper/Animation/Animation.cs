@@ -2,7 +2,6 @@
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
-using CompositionHelper.Helper;
 
 namespace CompositionHelper.Animation
 {
