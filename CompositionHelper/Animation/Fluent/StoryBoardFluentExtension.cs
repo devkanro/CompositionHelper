@@ -18,13 +18,13 @@ namespace CompositionHelper.Animation.Fluent
             return new StoryBoardFluentContext(target);
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector2> From(this EasyTransitionAnimationFluentContext<Vector2> animationFluentContext, float x, float y)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector2> From(this EasyTransitionAnimationWithKindFluentContext<Vector2> animationFluentContext, float x, float y)
         {
             animationFluentContext.From(new Vector2(x, y));
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector3> From(this EasyTransitionAnimationFluentContext<Vector3> animationFluentContext, float x, float y, float z)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector3> From(this EasyTransitionAnimationWithKindFluentContext<Vector3> animationFluentContext, float x, float y, float z)
         {
             animationFluentContext.From(new Vector3(x, y, z));
             return animationFluentContext;
@@ -66,13 +66,13 @@ namespace CompositionHelper.Animation.Fluent
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector2> From(this EasyTransitionAnimationFluentContext<Vector2> animationFluentContext, float value)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector2> From(this EasyTransitionAnimationWithKindFluentContext<Vector2> animationFluentContext, float value)
         {
             animationFluentContext.From(new Vector2(value, value));
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector3> From(this EasyTransitionAnimationFluentContext<Vector3> animationFluentContext, float value)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector3> From(this EasyTransitionAnimationWithKindFluentContext<Vector3> animationFluentContext, float value)
         {
             animationFluentContext.From(new Vector3(value, value, value));
             return animationFluentContext;
@@ -90,13 +90,13 @@ namespace CompositionHelper.Animation.Fluent
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector2> To(this EasyTransitionAnimationFluentContext<Vector2> animationFluentContext, float x, float y)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector2> To(this EasyTransitionAnimationWithKindFluentContext<Vector2> animationFluentContext, float x, float y)
         {
             animationFluentContext.To(new Vector2(x, y));
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector3> To(this EasyTransitionAnimationFluentContext<Vector3> animationFluentContext, float x, float y, float z)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector3> To(this EasyTransitionAnimationWithKindFluentContext<Vector3> animationFluentContext, float x, float y, float z)
         {
             animationFluentContext.To(new Vector3(x, y, z));
             return animationFluentContext;
@@ -138,13 +138,13 @@ namespace CompositionHelper.Animation.Fluent
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector2> To(this EasyTransitionAnimationFluentContext<Vector2> animationFluentContext, float value)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector2> To(this EasyTransitionAnimationWithKindFluentContext<Vector2> animationFluentContext, float value)
         {
             animationFluentContext.To(new Vector2(value, value));
             return animationFluentContext;
         }
 
-        public static EasyTransitionAnimationFluentContext<Vector3> To(this EasyTransitionAnimationFluentContext<Vector3> animationFluentContext, float value)
+        public static EasyTransitionAnimationWithKindFluentContext<Vector3> To(this EasyTransitionAnimationWithKindFluentContext<Vector3> animationFluentContext, float value)
         {
             animationFluentContext.To(new Vector3(value, value, value));
             return animationFluentContext;
@@ -162,13 +162,13 @@ namespace CompositionHelper.Animation.Fluent
             return animationFluentContext;
         }
 
-        public static KeyFrameTransitionAnimationFluentContext<Vector2> KeyFrame(this KeyFrameTransitionAnimationFluentContext<Vector2> animationFluentContext, float x, float y)
+        public static KeyFrameTransitionAnimationWithKindFluentContext<Vector2> KeyFrame(this KeyFrameTransitionAnimationWithKindFluentContext<Vector2> animationFluentContext, float x, float y)
         {
             animationFluentContext.KeyFrame(new Vector2(x, y));
             return animationFluentContext;
         }
 
-        public static KeyFrameTransitionAnimationFluentContext<Vector3> KeyFrame(this KeyFrameTransitionAnimationFluentContext<Vector3> animationFluentContext, float x, float y, float z)
+        public static KeyFrameTransitionAnimationWithKindFluentContext<Vector3> KeyFrame(this KeyFrameTransitionAnimationWithKindFluentContext<Vector3> animationFluentContext, float x, float y, float z)
         {
             animationFluentContext.KeyFrame(new Vector3(x, y, z));
             return animationFluentContext;
@@ -210,13 +210,13 @@ namespace CompositionHelper.Animation.Fluent
             return animationFluentContext;
         }
 
-        public static KeyFrameTransitionAnimationFluentContext<Vector2> KeyFrame(this KeyFrameTransitionAnimationFluentContext<Vector2> animationFluentContext, float value)
+        public static KeyFrameTransitionAnimationWithKindFluentContext<Vector2> KeyFrame(this KeyFrameTransitionAnimationWithKindFluentContext<Vector2> animationFluentContext, float value)
         {
             animationFluentContext.KeyFrame(new Vector2(value, value));
             return animationFluentContext;
         }
 
-        public static KeyFrameTransitionAnimationFluentContext<Vector3> KeyFrame(this KeyFrameTransitionAnimationFluentContext<Vector3> animationFluentContext, float value)
+        public static KeyFrameTransitionAnimationWithKindFluentContext<Vector3> KeyFrame(this KeyFrameTransitionAnimationWithKindFluentContext<Vector3> animationFluentContext, float value)
         {
             animationFluentContext.KeyFrame(new Vector3(value, value, value));
             return animationFluentContext;
